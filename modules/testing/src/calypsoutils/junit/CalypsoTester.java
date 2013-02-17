@@ -5,6 +5,9 @@ import static org.mockito.Mockito.when;
 
 import org.mockito.Mockito;
 
+import calypsoutils.junit.cache.BOCacheDummyImpl;
+import calypsoutils.junit.cache.LocalCacheDummyImpl;
+
 import com.calypso.tk.bo.BOCache;
 import com.calypso.tk.core.Holiday;
 import com.calypso.tk.service.DSConnection;
@@ -22,13 +25,14 @@ import com.calypso.tk.service.RemoteTrade;
  * 
  */
 public class CalypsoTester {
-    RemoteReferenceData      referenceData;
-    RemoteBackOffice         remoteBO;
-    RemoteTrade              remoteTrade;
-    RemoteMarketData         remoteMarketData;
-    RemoteAccess             remoteAccess;
-    BOCacheDummyImpl         cacheImpl;
-    DSConnection             dsConnection;
+    RemoteReferenceData referenceData;
+    RemoteBackOffice remoteBO;
+    RemoteTrade remoteTrade;
+    RemoteMarketData remoteMarketData;
+    RemoteAccess remoteAccess;
+    BOCacheDummyImpl boCacheImpl;
+    LocalCacheDummyImpl localCacheImpl;
+    DSConnection dsConnection;
 
     LocalCacheImplementation localCacheImplementation;
 
@@ -38,10 +42,11 @@ public class CalypsoTester {
      */
     CalypsoTester() {
         // Initialize the dummy BOCache
-        this.cacheImpl = new BOCacheDummyImpl();
-        this.cacheImpl.setCurrentHoliday(new Holiday());
-        BOCache.setImpl(this.cacheImpl);
-        LocalCache.setImpl(this.cacheImpl);
+        this.boCacheImpl = new BOCacheDummyImpl();
+        this.localCacheImplementation = new LocalCacheDummyImpl();
+        this.localCacheImpl.setCurrentHoliday(new Holiday());
+        BOCache.setImpl(this.boCacheImpl);
+        LocalCache.setImpl(this.localCacheImpl);
 
         // create a mock for the DSConnection
         this.dsConnection = mock(DSConnection.class);
@@ -59,33 +64,22 @@ public class CalypsoTester {
         this.localCacheImplementation = mock(LocalCacheImplementation.class);
     }
 
-    /**
-     * when a remote object is requested to the DSConnection return the mock
-     */
-    protected void mockDsConnection() {
-        when(this.dsConnection.getRemoteReferenceData()).thenReturn(
-                this.referenceData);
-        when(this.dsConnection.getRemoteBO()).thenReturn(this.remoteBO);
-        when(this.dsConnection.getRemoteTrade()).thenReturn(this.remoteTrade);
-        when(this.dsConnection.getRemoteMarketData()).thenReturn(
-                this.remoteMarketData);
-        when(this.dsConnection.getRemoteAccess()).thenReturn(this.remoteAccess);
+    public void free() {
+        BOCache.setImpl(null);
+        LocalCache.setImpl(null);
+        DSConnection.setDefault(null);
     }
 
-    /** reset all the mocked objects as well as the caches */
-    public void reset() {
-        this.cacheImpl.clear();
-        Mockito.reset(this.referenceData);
-        Mockito.reset(this.referenceData);
-        Mockito.reset(this.remoteBO);
-        Mockito.reset(this.remoteTrade);
-        Mockito.reset(this.remoteMarketData);
-        Mockito.reset(this.remoteAccess);
+    public BOCacheDummyImpl getCacheImpl() {
+        return this.boCacheImpl;
+    }
 
-        Mockito.reset(this.dsConnection);
-        mockDsConnection();
+    public DSConnection getDsConnection() {
+        return this.dsConnection;
+    }
 
-        Mockito.reset(this.localCacheImplementation);
+    public LocalCacheImplementation getLocalCacheImplementation() {
+        return this.localCacheImplementation;
     }
 
     public RemoteReferenceData getReferenceData() {
@@ -104,20 +98,50 @@ public class CalypsoTester {
         return this.remoteTrade;
     }
 
-    public BOCacheDummyImpl getCacheImpl() {
-        return this.cacheImpl;
+    /**
+     * when a remote object is requested to the DSConnection return the mock
+     */
+    protected void mockDsConnection() {
+        when(this.dsConnection.getRemoteReferenceData()).thenReturn(
+                this.referenceData);
+        when(this.dsConnection.getRemoteBO()).thenReturn(this.remoteBO);
+        when(this.dsConnection.getRemoteTrade()).thenReturn(this.remoteTrade);
+        when(this.dsConnection.getRemoteMarketData()).thenReturn(
+                this.remoteMarketData);
+        when(this.dsConnection.getRemoteAccess()).thenReturn(this.remoteAccess);
     }
 
-    public DSConnection getDsConnection() {
-        return this.dsConnection;
+    /** reset all the mocked objects as well as the caches */
+    public void reset() {
+        this.boCacheImpl.clear();
+        Mockito.reset(this.referenceData);
+        Mockito.reset(this.referenceData);
+        Mockito.reset(this.remoteBO);
+        Mockito.reset(this.remoteTrade);
+        Mockito.reset(this.remoteMarketData);
+        Mockito.reset(this.remoteAccess);
+
+        Mockito.reset(this.dsConnection);
+        mockDsConnection();
+
+        Mockito.reset(this.localCacheImplementation);
     }
 
     public void setCacheImpl(final BOCacheDummyImpl cacheImpl) {
-        this.cacheImpl = cacheImpl;
+        this.boCacheImpl = cacheImpl;
     }
 
     public void setDsConnection(final DSConnection dsConnection) {
         this.dsConnection = dsConnection;
+    }
+
+    /**
+     * @param localCacheImplementation
+     *            the localCacheImplementation to set
+     */
+    public void setLocalCacheImplementation(
+            final LocalCacheImplementation localCacheImplementation) {
+        this.localCacheImplementation = localCacheImplementation;
     }
 
     public void setReferenceData(final RemoteReferenceData referenceData) {
@@ -130,24 +154,5 @@ public class CalypsoTester {
 
     public void setRemoteTrade(final RemoteTrade remoteTrade) {
         this.remoteTrade = remoteTrade;
-    }
-
-    public LocalCacheImplementation getLocalCacheImplementation() {
-        return this.localCacheImplementation;
-    }
-
-    /**
-     * @param localCacheImplementation
-     *            the localCacheImplementation to set
-     */
-    public void setLocalCacheImplementation(
-            final LocalCacheImplementation localCacheImplementation) {
-        this.localCacheImplementation = localCacheImplementation;
-    }
-
-    public void free() {
-        BOCache.setImpl(null);
-        LocalCache.setImpl(null);
-        DSConnection.setDefault(null);
     }
 }
