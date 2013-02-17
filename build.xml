@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="calypso-utils">
+    <property environment="env"/>
+    <property name="output.dir" value="bin" />
+	<property name="output.junit.dir" value="junit-bin" />
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    
+    <path id="calypso-utils.classpath">
+        <pathelement location="${output.dir}"/>
+        <pathelement location="lib/mockito-all-1.9.5.jar"/>
+    </path>
+              	
+    <target name="init">
+        <mkdir dir="${output.dir}"/>
+        <copy includeemptydirs="false" todir="${output.dir}">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="${output.dir}">
+            <fileset dir="modules/testing/src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+              	
+    <target name="clean">
+        <delete dir="${output.dir}"/>
+    </target>
+              	
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="${output.dir}" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <src path="modules/testing/src"/>
+            <classpath refid="calypso-utils.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+</project>
