@@ -1,4 +1,4 @@
-package calypsoutils.junit.cache;
+package calypsoutils.testing.junit.cache;
 
 import java.util.ArrayList;
 import java.util.HashMap;

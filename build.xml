@@ -1,45 +1,273 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="build" name="calypso-utils">
-    <property environment="env"/>
-    <property name="output.dir" value="bin" />
-	<property name="output.junit.dir" value="junit-bin" />
-    <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.6"/>
-    <property name="source" value="1.6"/>
-    
-    <path id="calypso-utils.classpath">
-        <pathelement location="${output.dir}"/>
-        <pathelement location="lib/mockito-all-1.9.5.jar"/>
-    </path>
-              	
-    <target name="init">
-        <mkdir dir="${output.dir}"/>
-        <copy includeemptydirs="false" todir="${output.dir}">
-            <fileset dir="src">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-        <copy includeemptydirs="false" todir="${output.dir}">
-            <fileset dir="modules/testing/src">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-              	
-    <target name="clean">
-        <delete dir="${output.dir}"/>
-    </target>
-              	
-    <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="${output.dir}" includeantruntime="false" source="${source}" target="${target}">
-            <src path="src"/>
-            <src path="modules/testing/src"/>
-            <classpath refid="calypso-utils.classpath"/>
-        </javac>
-    </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+<project basedir="." default="cobertura-all" name="CalypsoCustomCobertura">
+	<echo message="CalypsoRelease.location = ${CalypsoRelease.location}" />
+	<property name="Calypso.jars.location" value="${CalypsoRelease.location}/jars" />
+
+	<echo message="using cobertura.dir = ${cobertura.dir}" />
+	<echo message="using findbugs.dir = ${findbugs.dir}" />
+	<echo message="using pmd.dir = ${pmd.dir}" />
+	<echo message="using checkstyle.dir = ${checkstyle.dir}" />
+
+	<property name="output.dir" value="../staging" />
+	<property name="src.dir" value="src" />
+	<property name="src-junit.dir" value="src-junit" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="target" value="1.6" />
+	<property name="source" value="1.6" />
+	<property name="junit.output" value="${output.dir}/reports/junit" />
+	<property name="javadoc.output" value="${output.dir}/javadoc" />
+	<property name="cobertura.output" value="${output.dir}/reports/cobertura" />
+	<property name="bin" value="${output.dir}/bin" />
+	<property name="bin-junit" value="${output.dir}/bin-junit" />
+	<property name="instrument" value="${output.dir}/instrument" />
+
+	<target name="set-classpath">
+		<path id="CalypsoRelease.classpath">
+			<pathelement location="${Calypso.jars.location}/activation.jar" />
+			<pathelement location="${Calypso.jars.location}/analysis-metadata.jar" />
+			<pathelement location="${Calypso.jars.location}/antlr.jar" />
+			<pathelement location="${Calypso.jars.location}/asm-1.5.3.jar" />
+			<pathelement location="${Calypso.jars.location}/asm-commons-2.2.3.jar" />
+			<pathelement location="${Calypso.jars.location}/asm-util-2.2.3.jar" />
+			<pathelement location="${Calypso.jars.location}/bench_jaxb.jar" />
+			<pathelement location="${Calypso.jars.location}/bench.jar" />
+			<pathelement location="${Calypso.jars.location}/c3p0-0.9.1.jar" />
+			<pathelement location="${Calypso.jars.location}/calculation-server.jar" />
+			<pathelement location="${Calypso.jars.location}/calib.jar" />
+			<pathelement location="${Calypso.jars.location}/calibintegration.jar" />
+			<pathelement location="${Calypso.jars.location}/calibration.jar" />
+			<pathelement location="${Calypso.jars.location}/calypso-core.jar" />
+			<pathelement location="${Calypso.jars.location}/calypso-logging.jar" />
+			<pathelement location="${Calypso.jars.location}/calypso-random.jar" />
+			<pathelement location="${Calypso.jars.location}/calypso.jar" />
+			<pathelement location="${Calypso.jars.location}/calypsoml-calculationserver-impl.jar" />
+			<pathelement location="${Calypso.jars.location}/calypsoml-core.jar" />
+			<pathelement location="${Calypso.jars.location}/calypsoml-impl.jar" />
+			<pathelement location="${Calypso.jars.location}/cdsisdamodel.jar" />
+			<pathelement location="${Calypso.jars.location}/cglib-2.1_3.jar" />
+			<pathelement location="${Calypso.jars.location}/comm.jar" />
+			<pathelement location="${Calypso.jars.location}/commons-collections-3.1.jar" />
+			<pathelement location="${Calypso.jars.location}/commons-dbcp-1.2.2.jar" />
+			<pathelement location="${Calypso.jars.location}/commons-logging.jar" />
+			<pathelement location="${Calypso.jars.location}/commons-pool-1.3.jar" />
+			<pathelement location="${Calypso.jars.location}/concurrentweakhashmap.jar" />
+			<pathelement location="${Calypso.jars.location}/dbbrowser.jar" />
+			<pathelement location="${Calypso.jars.location}/dbimportexport.jar" />
+			<pathelement location="${Calypso.jars.location}/deal-station.jar" />
+			<pathelement location="${Calypso.jars.location}/dom4j-1.6.1.jar" />
+			<pathelement location="${Calypso.jars.location}/ejb3-persistence.jar" />
+			<pathelement location="${Calypso.jars.location}/equitypricers.jar" />
+			<pathelement location="${Calypso.jars.location}/eventserver.jar" />
+			<pathelement location="${Calypso.jars.location}/executesql.jar" />
+			<pathelement location="${Calypso.jars.location}/ftp.jar" />
+			<pathelement location="${Calypso.jars.location}/galapagos_jaxb.jar" />
+			<pathelement location="${Calypso.jars.location}/galapagos.jar" />
+			<pathelement location="${Calypso.jars.location}/generic-query.jar" />
+			<pathelement location="${Calypso.jars.location}/hibernate-annotations-3.4.0.jar" />
+			<pathelement location="${Calypso.jars.location}/hibernate-commons-annotations-3.4.0.jar" />
+			<pathelement location="${Calypso.jars.location}/hibernate-core.jar" />
+			<pathelement location="${Calypso.jars.location}/hibernate-entitymanager-3.4.0.jar" />
+			<pathelement location="${Calypso.jars.location}/hibernate-impl.jar" />
+			<pathelement location="${Calypso.jars.location}/hibernate3.3.1.jar" />
+			<pathelement location="${Calypso.jars.location}/itext.jar" />
+			<pathelement location="${Calypso.jars.location}/iTextAsian.jar" />
+			<pathelement location="${Calypso.jars.location}/Jama.jar" />
+			<pathelement location="${Calypso.jars.location}/javacup.jar" />
+			<pathelement location="${Calypso.jars.location}/javassist.jar" />
+			<pathelement location="${Calypso.jars.location}/jaxb-impl-runtime.jar" />
+			<pathelement location="${Calypso.jars.location}/jaxb2/lib/activation.jar" />
+			<pathelement location="${Calypso.jars.location}/jaxb2/lib/jaxb-api.jar" />
+			<pathelement location="${Calypso.jars.location}/jaxb2/lib/jaxb-impl.jar" />
+			<pathelement location="${Calypso.jars.location}/jaxb2/lib/jaxb1-impl.jar" />
+			<pathelement location="${Calypso.jars.location}/jaxb2/lib/jsr173_1.0_api.jar" />
+			<pathelement location="${Calypso.jars.location}/jcommon.jar" />
+			<pathelement location="${Calypso.jars.location}/jdbc2_0-stdext.jar" />
+			<pathelement location="${Calypso.jars.location}/jfreechart.jar" />
+			<pathelement location="${Calypso.jars.location}/jide/lib/hssf.jar" />
+			<pathelement location="${Calypso.jars.location}/jide/lib/jide-action.jar" />
+			<pathelement location="${Calypso.jars.location}/jide/lib/jide-beaninfo.jar" />
+			<pathelement location="${Calypso.jars.location}/jide/lib/jide-common.jar" />
+			<pathelement location="${Calypso.jars.location}/jide/lib/jide-components.jar" />
+			<pathelement location="${Calypso.jars.location}/jide/lib/jide-designer.jar" />
+			<pathelement location="${Calypso.jars.location}/jide/lib/jide-dialogs.jar" />
+			<pathelement location="${Calypso.jars.location}/jide/lib/jide-dock.jar" />
+			<pathelement location="${Calypso.jars.location}/jide/lib/jide-grids.jar" />
+			<pathelement location="${Calypso.jars.location}/jide/lib/jide-pivot.jar" />
+			<pathelement location="${Calypso.jars.location}/jide/lib/velocity-dep-1.4.jar" />
+			<pathelement location="${Calypso.jars.location}/jide/lib/xerces.jar" />
+			<pathelement location="${Calypso.jars.location}/jta-1.0.1B.jar" />
+			<pathelement location="${Calypso.jars.location}/log4j.jar" />
+			<pathelement location="${Calypso.jars.location}/log4jextras.jar" />
+			<pathelement location="${Calypso.jars.location}/mail.jar" />
+			<pathelement location="${Calypso.jars.location}/mktdataserver.jar" />
+			<pathelement location="${Calypso.jars.location}/ocutil-2.4.2.jar" />
+			<pathelement location="${Calypso.jars.location}/persistence-service.jar" />
+			<pathelement location="${Calypso.jars.location}/presentation-server.jar" />
+			<pathelement location="${Calypso.jars.location}/pricinggrid.jar" />
+			<pathelement location="${Calypso.jars.location}/pricingsheet.jar" />
+			<pathelement location="${Calypso.jars.location}/schemer_jaxb.jar" />
+			<pathelement location="${Calypso.jars.location}/schemer.jar" />
+			<pathelement location="${Calypso.jars.location}/slf4j-api-1.5.6.jar" />
+			<pathelement location="${Calypso.jars.location}/slf4j-log4j12-1.5.6.jar" />
+			<pathelement location="${Calypso.jars.location}/swift-xml_jaxb.jar" />
+			<pathelement location="${Calypso.jars.location}/swift-xml.jar" />
+			<pathelement location="${Calypso.jars.location}/timehorizonsimulation.jar" />
+			<pathelement location="${Calypso.jars.location}/trade-blotter.jar" />
+			<pathelement location="${Calypso.jars.location}/twsutil.jar" />
+			<pathelement location="${Calypso.jars.location}/commons-lang-2.6.jar" />
+			<pathelement location="${Calypso.jars.location}/visokio-conf.jar" />
+			<pathelement location="${Calypso.jars.location}/web/servlet.jar" />
+			<pathelement location="${Calypso.jars.location}/web/webserver.jar" />
+			<pathelement location="${Calypso.jars.location}/webadmin.jar" />
+			<pathelement location="${Calypso.jars.location}/xalan-2.6.0.jar" />
+			<pathelement location="${Calypso.jars.location}/xbean_xpath-2.4.0.jar" />
+			<pathelement location="${Calypso.jars.location}/xbean-2.4.0.jar" />
+			<pathelement location="${Calypso.jars.location}/xml-apis.jar" />
+			<pathelement location="${Calypso.jars.location}/xpp3.jar" />
+			<pathelement location="${Calypso.jars.location}/xstream.jar" />
+			<pathelement location="${Calypso.jars.location}/matching.jar" />
+			<pathelement location="${Calypso.jars.location}/matchingx.jar" />
+		</path>
+		<path id="junit.classpath">
+			<pathelement location="lib/junit-4.11.jar" />
+			<pathelement location="lib/mockito-all-1.9.5.jar" />
+		</path>
+		<path id="CalypsoCustom.classpath">
+			<pathelement location="${bin}" />
+			<pathelement location="${bin-junit}" />
+			<path refid="CalypsoRelease.classpath" />
+			<path refid="junit.classpath" />
+		</path>
+	</target>
+
+	<target name="set-findbugs-classpath">
+		<path id="calypso.findbugs.classpath">
+			<pathelement location="${bin}" />
+			<pathelement location="${bin-junit}" />
+			<pathelement location="lib/junit-4.11.jar" />
+			<pathelement location="lib/mockito-all-1.9.5.jar" />
+			<pathelement location="${Calypso.jars.location}/calypso.jar" />
+		</path>
+	</target>
+
+
+	<path id="cobertura.classpath">
+		<fileset dir="${cobertura.dir}">
+			<include name="cobertura.jar" />
+			<include name="lib/**/*.jar" />
+		</fileset>
+	</path>
+	<path id="findbugs.classpath">
+		<fileset dir="${findbugs.dir}">
+			<include name="lib/**/*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+	<taskdef name="findbugs" classpathref="findbugs.classpath" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" />
+	<taskdef resource="checkstyletask.properties" classpath="${checkstyle.dir}/checkstyle-5.6-all.jar" />
+
+	<target name="create-dirs">
+		<mkdir dir="${bin}" />
+		<mkdir dir="${bin-junit}" />
+		<mkdir dir="reports" />
+		<mkdir dir="${junit.output}" />
+		<mkdir dir="${cobertura.output}" />
+	</target>
+
+	<target name="clean">
+		<delete file="cobertura.ser" />
+		<delete dir="${bin}" />
+		<delete dir="${bin-junit}" />
+		<delete dir="${instrument}" />
+		<delete dir="${cobertura.output}" />
+		<delete dir="${junit.output}" />
+		<delete file="reports/*.xml" />
+	</target>
+
+	<target name="cobertura-prepare" depends="clean, create-dirs">
+		<javac encoding="8859_1" optimize="yes" debug="true" debuglevel="${debuglevel}" destdir="${bin}" failonerror="TRUE" source="${source}" target="${target}">
+			<src path="${src.dir}" />
+			<classpath refid="CalypsoCustom.classpath" />
+			<compilerarg value="-Xlint" />
+		</javac>
+
+		<cobertura-instrument todir="${instrument}">
+			<fileset dir="${bin}">
+				<include name="**/*.class" />
+			</fileset>
+		</cobertura-instrument>
+
+		<javac encoding="8859_1" optimize="yes" debug="true" debuglevel="${debuglevel}" destdir="${bin-junit}" failonerror="TRUE" source="${source}" target="${target}">
+			<src path="${src-junit.dir}" />
+			<classpath refid="CalypsoCustom.classpath" />
+			<compilerarg value="-Xlint" />
+		</javac>
+	</target>
+
+	<target name="cobertura-runtests">
+		<junit fork="yes" forkmode="once" printsummary="withOutAndErr" errorProperty="test.failed" failureProperty="test.failed">
+			<formatter type="xml" />
+			<batchtest errorproperty="junit.result" todir="${junit.output}">
+				<fileset dir="src-junit">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+			<classpath location="instrument" />
+			<classpath refid="cobertura.classpath" />
+			<classpath refid="CalypsoCustom.classpath" />
+		</junit>
+	</target>
+
+
+	<target name="cobertura-report">
+		<cobertura-report format="xml" destdir="${cobertura.output}">
+			<fileset dir="src">
+				<include name="**/*.java" />
+			</fileset>
+		</cobertura-report>
+	</target>
+
+	<target name="cobertura-all" depends="set-classpath, cobertura-prepare, cobertura-runtests, cobertura-report">
+		<echo level="info">Cobertura reports generated on ${cobertura.output}</echo>
+		<echo level="info">Junit reports generated on ${junit.output}</echo>
+	</target>
+
+	<target name="findbugs" depends="clean, create-dirs, set-findbugs-classpath">
+		<findbugs timeout="6000000" home="${findbugs.dir}" output="xml:withMessages" outputFile="${output.dir}/reports/findbugs-report-fullclasspath.xml" reportlevel="medium" effort="max" jvmargs="-Xmx1024m" excludefilter="findbugfilter.xml">
+			<sourcePath>
+				<pathelement path="src" />
+			</sourcePath>
+			<class location="bin" />
+			<!-- <auxClasspath refid="calypso.findbugs.classpath" /> -->
+		</findbugs>
+	</target>
+
+	<target name="find-duplicated-code" description="Generate the CPD XML report">
+		<taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask">
+			<classpath>
+				<fileset dir="${pmd.dir}/lib">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</taskdef>
+		<cpd minimumTokenCount="200" format="xml" outputFile="${output.dir}/reports/cpd_report.xml">
+			<fileset dir=".">
+				<include name="src/**/*.java" />
+			</fileset>
+		</cpd>
+	</target>
+
+	<target name="checkstyle" description="Generates a report of code convention violations." depends="clean">
+		<checkstyle config="ci/checkstyle.config.xml" failureProperty="checkstyle.failure" failOnViolation="false">
+			<formatter type="xml" tofile="${output.dir}/reports/checkstyle_report.xml" />
+			<fileset dir=".">
+				<include name="${src.dir}/**/*.java" />
+			</fileset>
+		</checkstyle>
+	</target>
+
+	<target name="javadoc" depends="set-classpath">
+		<javadoc access="public" author="true" classpathref="CalypsoCustom.classpath" destdir="${javadoc.output}" doctitle="Calypso Utils" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="calypsoutils.*" source="1.6" sourcepath="src" splitindex="true" use="true" version="true" />
+	</target>
 </project>

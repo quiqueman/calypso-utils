@@ -1,18 +1,17 @@
-package calypsoutils.junit;
+package calypsoutils.testing.junit;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.mockito.Mockito;
 
-import calypsoutils.junit.cache.BOCacheDummyImpl;
-import calypsoutils.junit.cache.LocalCacheDummyImpl;
+import calypsoutils.testing.junit.cache.BOCacheDummyImpl;
+import calypsoutils.testing.junit.cache.LocalCacheDummyImpl;
 
 import com.calypso.tk.bo.BOCache;
 import com.calypso.tk.core.Holiday;
 import com.calypso.tk.service.DSConnection;
 import com.calypso.tk.service.LocalCache;
-import com.calypso.tk.service.LocalCacheImplementation;
 import com.calypso.tk.service.RemoteAccess;
 import com.calypso.tk.service.RemoteBackOffice;
 import com.calypso.tk.service.RemoteMarketData;
@@ -34,16 +33,14 @@ public class CalypsoTester {
     LocalCacheDummyImpl localCacheImpl;
     DSConnection dsConnection;
 
-    LocalCacheImplementation localCacheImplementation;
-
     /**
      * You should use the UnitTestHelperAccess to retrieve instance of this
      * class to ensure free all mocked objects after each test
      */
-    CalypsoTester() {
+    protected CalypsoTester() {
         // Initialize the dummy BOCache
         this.boCacheImpl = new BOCacheDummyImpl();
-        this.localCacheImplementation = new LocalCacheDummyImpl();
+        this.localCacheImpl = new LocalCacheDummyImpl();
         this.localCacheImpl.setCurrentHoliday(new Holiday());
         BOCache.setImpl(this.boCacheImpl);
         LocalCache.setImpl(this.localCacheImpl);
@@ -60,8 +57,6 @@ public class CalypsoTester {
         this.remoteAccess = mock(RemoteAccess.class);
 
         mockDsConnection();
-
-        this.localCacheImplementation = mock(LocalCacheImplementation.class);
     }
 
     public void free() {
@@ -76,10 +71,6 @@ public class CalypsoTester {
 
     public DSConnection getDsConnection() {
         return this.dsConnection;
-    }
-
-    public LocalCacheImplementation getLocalCacheImplementation() {
-        return this.localCacheImplementation;
     }
 
     public RemoteReferenceData getReferenceData() {
@@ -114,6 +105,7 @@ public class CalypsoTester {
     /** reset all the mocked objects as well as the caches */
     public void reset() {
         this.boCacheImpl.clear();
+        this.localCacheImpl.clear();
         Mockito.reset(this.referenceData);
         Mockito.reset(this.referenceData);
         Mockito.reset(this.remoteBO);
@@ -123,8 +115,6 @@ public class CalypsoTester {
 
         Mockito.reset(this.dsConnection);
         mockDsConnection();
-
-        Mockito.reset(this.localCacheImplementation);
     }
 
     public void setCacheImpl(final BOCacheDummyImpl cacheImpl) {
@@ -133,15 +123,6 @@ public class CalypsoTester {
 
     public void setDsConnection(final DSConnection dsConnection) {
         this.dsConnection = dsConnection;
-    }
-
-    /**
-     * @param localCacheImplementation
-     *            the localCacheImplementation to set
-     */
-    public void setLocalCacheImplementation(
-            final LocalCacheImplementation localCacheImplementation) {
-        this.localCacheImplementation = localCacheImplementation;
     }
 
     public void setReferenceData(final RemoteReferenceData referenceData) {
