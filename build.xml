@@ -170,9 +170,9 @@
 	<target name="create-dirs">
 		<mkdir dir="${bin}" />
 		<mkdir dir="${bin-junit}" />
-		<mkdir dir="reports" />
 		<mkdir dir="${junit.output}" />
 		<mkdir dir="${cobertura.output}" />
+		<mkdir file="${output.dir}/reports/*.xml" />
 	</target>
 
 	<target name="clean">
@@ -182,7 +182,7 @@
 		<delete dir="${instrument}" />
 		<delete dir="${cobertura.output}" />
 		<delete dir="${junit.output}" />
-		<delete file="reports/*.xml" />
+		<delete file="${output.dir}/reports/*.xml" />
 	</target>
 
 	<target name="cobertura-prepare">
