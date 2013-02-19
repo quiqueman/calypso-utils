@@ -185,7 +185,7 @@
 		<delete file="reports/*.xml" />
 	</target>
 
-	<target name="cobertura-prepare" depends="clean, create-dirs">
+	<target name="cobertura-prepare">
 		<javac encoding="8859_1" optimize="yes" debug="true" debuglevel="${debuglevel}" destdir="${bin}" failonerror="TRUE" source="${source}" target="${target}">
 			<src path="${src.dir}" />
 			<classpath refid="CalypsoCustom.classpath" />
@@ -228,7 +228,7 @@
 		</cobertura-report>
 	</target>
 
-	<target name="cobertura-all" depends="set-classpath, cobertura-prepare, cobertura-runtests, cobertura-report">
+	<target name="cobertura-all" depends="cobertura-prepare, cobertura-runtests, cobertura-report">
 		<echo level="info">Cobertura reports generated on ${cobertura.output}</echo>
 		<echo level="info">Junit reports generated on ${junit.output}</echo>
 	</target>
@@ -253,7 +253,7 @@
 		</taskdef>
 		<cpd minimumTokenCount="200" format="xml" outputFile="${output.dir}/reports/cpd_report.xml">
 			<fileset dir=".">
-				<include name="src/**/*.java" />
+				<include name="${src.dir}/**/*.java" />
 			</fileset>
 		</cpd>
 	</target>
@@ -271,5 +271,5 @@
 		<javadoc access="public" author="true" classpathref="CalypsoCustom.classpath" destdir="${javadoc.output}" doctitle="Calypso Utils" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="calypsoutils.*" source="1.6" sourcepath="src" splitindex="true" use="true" version="true" />
 	</target>
 	
-	<target name="hudson" depends="find-duplicated-code, cobertura-all, checkstyle, javadoc"/>   
+	<target name="hudson" depends="clean, create-dirs, set-classpath, find-duplicated-code, cobertura-all, checkstyle, javadoc"/>   
 </project>
