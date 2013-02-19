@@ -201,7 +201,6 @@
 		<javac encoding="8859_1" optimize="yes" debug="true" debuglevel="${debuglevel}" destdir="${bin-junit}" failonerror="TRUE" source="${source}" target="${target}">
 			<src path="${src-junit.dir}" />
 			<classpath refid="CalypsoCustom.classpath" />
-			<compilerarg value="-Xlint" />
 		</javac>
 	</target>
 
