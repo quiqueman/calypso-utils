@@ -172,7 +172,7 @@
 		<mkdir dir="${bin-junit}" />
 		<mkdir dir="${junit.output}" />
 		<mkdir dir="${cobertura.output}" />
-		<mkdir file="${output.dir}/reports/*.xml" />
+		<mkdir dir="${output.dir}/reports/*.xml" />
 	</target>
 
 	<target name="clean">
