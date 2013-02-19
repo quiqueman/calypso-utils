@@ -172,17 +172,11 @@
 		<mkdir dir="${bin-junit}" />
 		<mkdir dir="${junit.output}" />
 		<mkdir dir="${cobertura.output}" />
-		<mkdir dir="${output.dir}/reports/*.xml" />
 	</target>
 
 	<target name="clean">
 		<delete file="cobertura.ser" />
-		<delete dir="${bin}" />
-		<delete dir="${bin-junit}" />
-		<delete dir="${instrument}" />
-		<delete dir="${cobertura.output}" />
-		<delete dir="${junit.output}" />
-		<delete file="${output.dir}/reports/*.xml" />
+		<delete dir="${output.dir}" />
 	</target>
 
 	<target name="cobertura-prepare">
