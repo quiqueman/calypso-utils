@@ -8,7 +8,7 @@
 	<echo message="using pmd.dir = ${pmd.dir}" />
 	<echo message="using checkstyle.dir = ${checkstyle.dir}" />
 
-	<property name="output.dir" value="../staging" />
+	<property name="output.dir" value="staging" />
 	<property name="src.dir" value="src" />
 	<property name="src-junit.dir" value="src-junit" />
 	<property name="debuglevel" value="source,lines,vars" />
