@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="cobertura-all" name="CalypsoCustomCobertura">
+<project basedir="." default="hudson" name="CalypsoCustomCobertura">
 	<echo message="CalypsoRelease.location = ${CalypsoRelease.location}" />
 	<property name="Calypso.jars.location" value="${CalypsoRelease.location}/jars" />
 
@@ -258,7 +258,7 @@
 		</cpd>
 	</target>
 
-	<target name="checkstyle" description="Generates a report of code convention violations." depends="clean">
+	<target name="checkstyle" description="Generates a report of code convention violations.">
 		<checkstyle config="ci/checkstyle.config.xml" failureProperty="checkstyle.failure" failOnViolation="false">
 			<formatter type="xml" tofile="${output.dir}/reports/checkstyle_report.xml" />
 			<fileset dir=".">
@@ -270,4 +270,6 @@
 	<target name="javadoc" depends="set-classpath">
 		<javadoc access="public" author="true" classpathref="CalypsoCustom.classpath" destdir="${javadoc.output}" doctitle="Calypso Utils" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="calypsoutils.*" source="1.6" sourcepath="src" splitindex="true" use="true" version="true" />
 	</target>
+	
+	<target name="hudson" depends="find-duplicated-code, cobertura-all, checkstyle, javadoc"/>   
 </project>
