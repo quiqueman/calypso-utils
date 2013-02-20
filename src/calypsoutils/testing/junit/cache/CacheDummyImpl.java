@@ -19,6 +19,9 @@ public abstract class CacheDummyImpl {
     protected final HashMap<String, Object> cache;
     protected Hashtable<String, Object> currencyDefaults;
 
+    /**
+     * Initialize the cache
+     */
     public CacheDummyImpl() {
         this.cache = new HashMap<String, Object>();
 
@@ -34,7 +37,7 @@ public abstract class CacheDummyImpl {
         this.cache.put(CacheTypesEnum.BOOK + book.getName(), book);
     }
 
-    public void add(final CurrencyDefault cd) {
+    public final void add(final CurrencyDefault cd) {
         this.cache.put(CacheTypesEnum.CURRENCY + cd.getCode(), cd);
 
     }
@@ -45,13 +48,13 @@ public abstract class CacheDummyImpl {
                         + "_" + time, expTimeZone);
     }
 
-    public void add(final LEContact contact) {
+    public final void add(final LEContact contact) {
         this.cache.put(
                 CacheTypesEnum.LECONTACT.toString()
                         + contact.getLegalEntityId(), contact);
     }
 
-    public void add(final LegalEntity le) {
+    public final void add(final LegalEntity le) {
         this.cache
                 .put(CacheTypesEnum.LEGAL_ENTITY.toString() + le.getId(), le);
         this.cache.put(CacheTypesEnum.LEGAL_ENTITY + le.getCode(), le);
@@ -66,52 +69,55 @@ public abstract class CacheDummyImpl {
 
     }
 
-    public void add(final LegalEntityAttribute lea) {
+    public final void add(final LegalEntityAttribute lea) {
         this.cache.put(CacheTypesEnum.LEA.toString() + lea.getLegalEntityId()
                 + "." + lea.getAttributeType(), lea);
     }
 
-    public void add(final PartySDI partySDI) {
+    public final void add(final PartySDI partySDI) {
         this.cache.put(
                 CacheTypesEnum.PARTY_SDI.toString() + partySDI.getPartyId(),
                 partySDI);
     }
 
-    public void add(final SDI sdi) {
+    public final void add(final SDI sdi) {
         this.cache.put(CacheTypesEnum.SDI.toString() + sdi.getId(), sdi);
     }
 
-    public void add(final Vector<String> domainValues, final String domainName) {
+    public final void add(final Vector<String> domainValues,
+            final String domainName) {
         this.cache.put(CacheTypesEnum.DOMAIN_VALUES.toString() + domainName,
                 domainValues);
     }
 
-    public void addCountryISOCode(final String country, final String isoCode) {
+    public final void addCountryISOCode(final String country,
+            final String isoCode) {
         this.cache.put(CacheTypesEnum.COUNTRY + country, isoCode);
     }
 
-    public void addCurrencyDefault(final String currency,
+    public final void addCurrencyDefault(final String currency,
             final CurrencyDefault cd) {
         this.cache.put(CacheTypesEnum.CURRENCY + currency, cd);
     }
 
-    public void addDomainValueComment(final String domainName,
+    public final void addDomainValueComment(final String domainName,
             final String domainValue, final String comment) {
         this.cache.put(CacheTypesEnum.DOMAIN_VALUE_COMMENT + domainName + "."
                 + domainValue, comment);
     }
 
-    public void addLongName(final String longName, final PartySDI partySDI) {
+    public final void addLongName(final String longName,
+            final PartySDI partySDI) {
         this.cache.put(
                 CacheTypesEnum.LONG_NAME.toString() + partySDI.getPartyId(),
                 longName);
     }
 
-    public void addUserName(final String s) {
+    public final void addUserName(final String s) {
         this.cache.put("UserName." + s, s);
     }
 
-    public void clear() {
+    public final void clear() {
         this.cache.clear();
     }
 
