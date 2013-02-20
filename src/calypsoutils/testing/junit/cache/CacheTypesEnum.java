@@ -1,5 +1,9 @@
 package calypsoutils.testing.junit.cache;
 
+/**
+ * Contains some constants used when storing the data in the cache
+ * 
+ */
 public enum CacheTypesEnum {
     ACCOUNT("Account."), LECONTACT("LEContact."), SDI("SDI."), LEA(
             "LegalEntityAttribute."), LEGAL_ENTITY("LegalEntity."), BOOK(
