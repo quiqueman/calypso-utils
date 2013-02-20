@@ -202,11 +202,11 @@
 		<junit fork="yes" forkmode="once" printsummary="withOutAndErr" errorProperty="test.failed" failureProperty="test.failed">
 			<formatter type="xml" />
 			<batchtest errorproperty="junit.result" todir="${junit.output}">
-				<fileset dir="src-junit">
+				<fileset dir="${src-junit.dir}">
 					<include name="**/*Test.java" />
 				</fileset>
 			</batchtest>
-			<classpath location="instrument" />
+			<classpath location="${instrument}" />
 			<classpath refid="cobertura.classpath" />
 			<classpath refid="CalypsoCustom.classpath" />
 		</junit>
@@ -215,7 +215,7 @@
 
 	<target name="cobertura-report">
 		<cobertura-report format="xml" destdir="${cobertura.output}">
-			<fileset dir="src">
+			<fileset dir="${src.dir}">
 				<include name="**/*.java" />
 			</fileset>
 		</cobertura-report>
