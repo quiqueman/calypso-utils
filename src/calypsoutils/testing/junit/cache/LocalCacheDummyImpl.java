@@ -23,15 +23,11 @@ import com.calypso.tk.product.CDSSettlementMatrix;
 import com.calypso.tk.product.CDSSettlementMatrixConfig;
 import com.calypso.tk.product.Commodity;
 import com.calypso.tk.product.commodities.schedulegeneration.intraday.IntradayConfiguration;
-import com.calypso.tk.refdata.Account;
 import com.calypso.tk.refdata.CommodityReset;
 import com.calypso.tk.refdata.CurrencyDefault;
 import com.calypso.tk.refdata.CurrencyPair;
 import com.calypso.tk.refdata.FXOptExpTZ;
 import com.calypso.tk.refdata.FXReset;
-import com.calypso.tk.refdata.LEContact;
-import com.calypso.tk.refdata.LegalEntityAttribute;
-import com.calypso.tk.refdata.PartySDI;
 import com.calypso.tk.refdata.RateIndex;
 import com.calypso.tk.refdata.RateIndexDefaults;
 import com.calypso.tk.refdata.SDI;
@@ -41,126 +37,12 @@ import com.calypso.tk.util.PositionArray;
 import com.calypso.tk.util.SettlePositionArray;
 import com.calypso.tk.util.SettlePositionBucketArray;
 
-public class LocalCacheDummyImpl implements LocalCacheImplementation {
-
-    private static final String ACCOUNT = "Account.";
-
-    private static final String LECONTACT = "LEContact.";
-
-    private static final String SDI = "SDI.";
-
-    private static final String LEA = "LegalEntityAttribute.";
-
-    private static final String LEGAL_ENTITY = "LegalEntity.";
-
-    private static final String BOOK = "Book.";
-
-    private static final String CURRENCY = "Currency.";
-
-    private static final String PARTY_SDI = "PartySDI.";
-
-    private static final String LONG_NAME = "LongName.";
-
-    private static final String DOMAIN_VALUES = "DomainValues.";
-    private static final String DOMAIN_VALUE_COMMENT = "DomainValueComment.";
-
-    private static final String EXPIRY_TZ_VALUES = "ExpiryTZValues.";
-
-    private static final String COUNTRY = "Country";
-    private static final String ATTRIBUTES = "Attributes";
-
-    private final HashMap<String, Object> cache;
-    private Hashtable<String, Object> currencyDefaults;
+public class LocalCacheDummyImpl extends CacheDummyImpl implements
+        LocalCacheImplementation {
 
     private Holiday holiday;
 
     private RateIndexDefaults rateIndexDefaults;
-
-    public LocalCacheDummyImpl() {
-        this.cache = new HashMap<String, Object>();
-    }
-
-    public void add(final Account account) {
-        this.cache.put(ACCOUNT + account.getId(), account);
-    }
-
-    public void add(final Book book) {
-        this.cache.put(BOOK + book.getId(), book);
-        this.cache.put(BOOK + book.getName(), book);
-    }
-
-    public void add(final CurrencyDefault cd) {
-        this.cache.put(CURRENCY + cd.getCode(), cd);
-
-    }
-
-    public void add(final FXOptExpTZ expTimeZone, final String time) {
-        this.cache.put(
-                EXPIRY_TZ_VALUES + expTimeZone.getTimeStr() + "_" + time,
-                expTimeZone);
-    }
-
-    public void add(final LEContact contact) {
-        this.cache.put(LECONTACT + contact.getLegalEntityId(), contact);
-    }
-
-    public void add(final LegalEntity le) {
-        this.cache.put(LEGAL_ENTITY + le.getId(), le);
-        this.cache.put(LEGAL_ENTITY + le.getCode(), le);
-        this.cache.put(LEGAL_ENTITY + le.getId() + COUNTRY, le.getCountry());
-        this.cache.put(LEGAL_ENTITY + le.getCode() + COUNTRY, le.getCountry());
-        this.cache.put(LEGAL_ENTITY + le.getId() + ATTRIBUTES,
-                le.getLegalEntityAttributes());
-        this.cache.put(LEGAL_ENTITY + le.getCode() + ATTRIBUTES,
-                le.getLegalEntityAttributes());
-
-    }
-
-    public void add(final LegalEntityAttribute lea) {
-        this.cache.put(
-                LEA + lea.getLegalEntityId() + "." + lea.getAttributeType(),
-                lea);
-    }
-
-    public void add(final PartySDI partySDI) {
-        this.cache.put(PARTY_SDI + partySDI.getPartyId(), partySDI);
-    }
-
-    public void add(final SDI sdi) {
-        this.cache.put(SDI + sdi.getId(), sdi);
-    }
-
-    public void add(final Vector<String> domainValues, final String domainName) {
-        this.cache.put(DOMAIN_VALUES + domainName, domainValues);
-    }
-
-    public void addCountryISOCode(final String country, final String isoCode) {
-        this.cache.put(COUNTRY + country, isoCode);
-    }
-
-    public void addCurrencyDefault(final String currency,
-            final CurrencyDefault cd) {
-        this.cache.put(CURRENCY + currency, cd);
-    }
-
-    public void addDomainValueComment(final String domainName,
-            final String domainValue, final String comment) {
-        this.cache.put(DOMAIN_VALUE_COMMENT + domainName + "." + domainValue,
-                comment);
-    }
-
-    public void addLongName(final String longName, final PartySDI partySDI) {
-        this.cache.put(LONG_NAME + partySDI.getPartyId(), longName);
-    }
-
-    public void addUserName(final String s) {
-        this.cache.put("UserName." + s, s);
-    }
-
-    @Override
-    public void clear() {
-        this.cache.clear();
-    }
 
     @SuppressWarnings("rawtypes")
     @Override
@@ -300,7 +182,8 @@ public class LocalCacheDummyImpl implements LocalCacheImplementation {
     }
 
     @Override
-    public CDSSettlementMatrix getCDSSettlementMatrixItem(final int matrixItemId) {
+    public CDSSettlementMatrix getCDSSettlementMatrixItem(
+            final int matrixItemId) {
 
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
@@ -360,7 +243,8 @@ public class LocalCacheDummyImpl implements LocalCacheImplementation {
 
     @Override
     public CurrencyDefault getCurrencyDefault(final String currency) {
-        return (CurrencyDefault) this.cache.get(CURRENCY + currency);
+        return (CurrencyDefault) this.cache.get(CacheTypesEnum.CURRENCY
+                + currency);
     }
 
     @SuppressWarnings("rawtypes")
@@ -411,15 +295,16 @@ public class LocalCacheDummyImpl implements LocalCacheImplementation {
     public String getDomainValueComment(final DSConnection ds,
             final String domainName, final String value) {
 
-        return (String) this.cache.get(DOMAIN_VALUE_COMMENT + domainName + "."
-                + value);
+        return (String) this.cache.get(CacheTypesEnum.DOMAIN_VALUE_COMMENT
+                + domainName + "." + value);
     }
 
     @SuppressWarnings("rawtypes")
     @Override
-    public Vector getDomainValues(final DSConnection ds, final String domainName) {
-        final Vector result = (Vector) this.cache.get(DOMAIN_VALUES
-                + domainName);
+    public Vector getDomainValues(final DSConnection ds,
+            final String domainName) {
+        final Vector result = (Vector) this.cache
+                .get(CacheTypesEnum.DOMAIN_VALUES + domainName);
         return result;
     }
 
@@ -480,8 +365,8 @@ public class LocalCacheDummyImpl implements LocalCacheImplementation {
 
     @Override
     public FXOptExpTZ getFXOptExpTZ(final String tzs, final String timeStr) {
-        final FXOptExpTZ result = (FXOptExpTZ) this.cache.get(EXPIRY_TZ_VALUES
-                + tzs + "_" + timeStr);
+        final FXOptExpTZ result = (FXOptExpTZ) this.cache
+                .get(CacheTypesEnum.EXPIRY_TZ_VALUES + tzs + "_" + timeStr);
         return result;
     }
 
@@ -574,8 +459,9 @@ public class LocalCacheDummyImpl implements LocalCacheImplementation {
     }
 
     @Override
-    public RateIndex getRateIndex(final DSConnection ds, final String currency,
-            final String index, final Tenor tenor, final String source) {
+    public RateIndex getRateIndex(final DSConnection ds,
+            final String currency, final String index, final Tenor tenor,
+            final String source) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
@@ -613,8 +499,9 @@ public class LocalCacheDummyImpl implements LocalCacheImplementation {
 
     @Override
     public SettlePositionBucketArray getSettlePositionBuckets(
-            final DSConnection ds, final PosCashFlow pc, final String dateType,
-            final JDate date, final JDatetime bucketDatetime) {
+            final DSConnection ds, final PosCashFlow pc,
+            final String dateType, final JDate date,
+            final JDatetime bucketDatetime) {
 
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
@@ -640,7 +527,8 @@ public class LocalCacheDummyImpl implements LocalCacheImplementation {
 
     @Override
     public SettlePositionArray getSettlePositions(final DSConnection ds,
-            final TradeOpenQuantity qty, final JDate date, final String dateType) {
+            final TradeOpenQuantity qty, final JDate date,
+            final String dateType) {
 
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
@@ -718,18 +606,19 @@ public class LocalCacheDummyImpl implements LocalCacheImplementation {
     }
 
     public void remove(final Book book) {
-        this.cache.remove(BOOK + book.getId());
-        this.cache.remove(BOOK + book.getName());
+        this.cache.remove(CacheTypesEnum.BOOK.toString() + book.getId());
+        this.cache.remove(CacheTypesEnum.BOOK.toString() + book.getName());
 
     }
 
     public void remove(final LegalEntity le) {
-        this.cache.remove(LEGAL_ENTITY + le.getId());
-        this.cache.remove(LEGAL_ENTITY + le.getCode());
+        this.cache.remove(CacheTypesEnum.LEGAL_ENTITY.toString() + le.getId());
+        this.cache.remove(CacheTypesEnum.LEGAL_ENTITY.toString()
+                + le.getCode());
     }
 
     public void remove(final SDI sdi) {
-        this.cache.remove(SDI + sdi.getId());
+        this.cache.remove(CacheTypesEnum.SDI.toString() + sdi.getId());
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -745,7 +634,8 @@ public class LocalCacheDummyImpl implements LocalCacheImplementation {
 
     public void setDomainValueComment(final String s1, final String s2,
             final String s3) {
-        this.cache.put(DOMAIN_VALUE_COMMENT + s1 + "." + s2, s3);
+        this.cache
+                .put(CacheTypesEnum.DOMAIN_VALUE_COMMENT + s1 + "." + s2, s3);
     }
 
     /**

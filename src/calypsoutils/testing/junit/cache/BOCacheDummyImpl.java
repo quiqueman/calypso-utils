@@ -84,8 +84,6 @@ import com.calypso.tk.refdata.CFDContractDefinition;
 import com.calypso.tk.refdata.CFDCountryGrid;
 import com.calypso.tk.refdata.CommodityReset;
 import com.calypso.tk.refdata.Country;
-import com.calypso.tk.refdata.CurrencyDefault;
-import com.calypso.tk.refdata.FXOptExpTZ;
 import com.calypso.tk.refdata.FeeBillingRule;
 import com.calypso.tk.refdata.FeeGrid;
 import com.calypso.tk.refdata.FormattingStyle;
@@ -100,7 +98,6 @@ import com.calypso.tk.refdata.ManualSDI;
 import com.calypso.tk.refdata.MarginCallConfig;
 import com.calypso.tk.refdata.MessageGroup;
 import com.calypso.tk.refdata.NettingMethod;
-import com.calypso.tk.refdata.PartySDI;
 import com.calypso.tk.refdata.RoleDisabled;
 import com.calypso.tk.refdata.SDI;
 import com.calypso.tk.refdata.SettleDeliveryInstruction;
@@ -117,129 +114,7 @@ import com.calypso.tk.service.DSConnection;
 import com.calypso.tk.util.ManualSDIArray;
 import com.calypso.tk.util.SDIArray;
 
-public class BOCacheDummyImpl implements CacheImpl {
-
-    private static final String ACCOUNT = "Account.";
-
-    private static final String LECONTACT = "LEContact.";
-
-    private static final String SDI = "SDI.";
-
-    private static final String LEA = "LegalEntityAttribute.";
-
-    private static final String LEGAL_ENTITY = "LegalEntity.";
-
-    private static final String BOOK = "Book.";
-
-    private static final String CURRENCY = "Currency.";
-
-    private static final String PARTY_SDI = "PartySDI.";
-
-    private static final String LONG_NAME = "LongName.";
-
-    private static final String DOMAIN_VALUES = "DomainValues.";
-    private static final String DOMAIN_VALUE_COMMENT = "DomainValueComment.";
-
-    private static final String EXPIRY_TZ_VALUES = "ExpiryTZValues.";
-
-    private static final String COUNTRY = "Country";
-    private static final String ATTRIBUTES = "Attributes";
-
-    HashMap<String, Object> cache;
-    Hashtable<String, Object> currencyDefaults;
-
-    public BOCacheDummyImpl() {
-        this.cache = new HashMap<String, Object>();
-    }
-
-    public void add(final Account account) {
-        this.cache.put(ACCOUNT + account.getId(), account);
-    }
-
-    public void add(final Book book) {
-        this.cache.put(BOOK + book.getId(), book);
-        this.cache.put(BOOK + book.getName(), book);
-    }
-
-    public void add(final CurrencyDefault cd) {
-        this.cache.put(CURRENCY + cd.getCode(), cd);
-
-    }
-
-    public void add(final FXOptExpTZ expTimeZone, final String time) {
-        this.cache.put(
-                EXPIRY_TZ_VALUES + expTimeZone.getTimeStr() + "_" + time,
-                expTimeZone);
-    }
-
-    public void add(final LEContact contact) {
-        this.cache.put(LECONTACT + contact.getLegalEntityId(), contact);
-    }
-
-    public void add(final LegalEntity le) {
-        this.cache.put(LEGAL_ENTITY + le.getId(), le);
-        this.cache.put(LEGAL_ENTITY + le.getCode(), le);
-        this.cache.put(LEGAL_ENTITY + le.getId() + COUNTRY, le.getCountry());
-        this.cache.put(LEGAL_ENTITY + le.getCode() + COUNTRY, le.getCountry());
-        this.cache.put(LEGAL_ENTITY + le.getId() + ATTRIBUTES,
-                le.getLegalEntityAttributes());
-        this.cache.put(LEGAL_ENTITY + le.getCode() + ATTRIBUTES,
-                le.getLegalEntityAttributes());
-
-    }
-
-    public void add(final LegalEntityAttribute lea) {
-        this.cache.put(
-                LEA + lea.getLegalEntityId() + "." + lea.getAttributeType(),
-                lea);
-    }
-
-    public void add(final PartySDI partySDI) {
-        this.cache.put(PARTY_SDI + partySDI.getPartyId(), partySDI);
-    }
-
-    public void add(final SDI sdi) {
-        this.cache.put(SDI + sdi.getId(), sdi);
-    }
-
-    public void add(final Vector<String> domainValues, final String domainName) {
-        this.cache.put(DOMAIN_VALUES + domainName, domainValues);
-    }
-
-    public void addCountryISOCode(final String country, final String isoCode) {
-        this.cache.put(COUNTRY + country, isoCode);
-    }
-
-    public void addCurrencyDefault(final String currency,
-            final CurrencyDefault cd) {
-        this.cache.put(CURRENCY + currency, cd);
-    }
-
-    public void addDomainValueComment(final String domainName,
-            final String domainValue, final String comment) {
-        this.cache.put(DOMAIN_VALUE_COMMENT + domainName + "." + domainValue,
-                comment);
-    }
-
-    @Override
-    public void addInventoryAggregation(final DSConnection ds,
-            final InventoryAggregation invAgg) {
-        throw new UnsupportedOperationException(
-                "TODO Auto-generated method stub");
-    }
-
-    public void addLongName(final String longName, final PartySDI partySDI) {
-        this.cache.put(LONG_NAME + partySDI.getPartyId(), longName);
-    }
-
-    public void addUserName(final String s) {
-        this.cache.put("UserName." + s, s);
-    }
-
-    @Override
-    public void clear() {
-        this.cache.clear();
-    }
+public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
 
     @Override
     public void clearFlows(final int productId) {
@@ -292,7 +167,8 @@ public class BOCacheDummyImpl implements CacheImpl {
 
     @Override
     public Account getAccount(final DSConnection ds, final int id) {
-        return (Account) this.cache.get(ACCOUNT + id);
+        return (Account) this.cache
+                .get(CacheTypesEnum.ACCOUNT.toString() + id);
     }
 
     @Override
@@ -381,8 +257,9 @@ public class BOCacheDummyImpl implements CacheImpl {
     }
 
     @Override
-    public SDIArray getBeneSettleDeliveryInstructions(final String beneficiary,
-            final String role, final DSConnection dsCon) {
+    public SDIArray getBeneSettleDeliveryInstructions(
+            final String beneficiary, final String role,
+            final DSConnection dsCon) {
 
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
@@ -437,12 +314,12 @@ public class BOCacheDummyImpl implements CacheImpl {
 
     @Override
     public Book getBook(final DSConnection dsCon, final int id) {
-        return (Book) this.cache.get(BOOK + id);
+        return (Book) this.cache.get(CacheTypesEnum.BOOK.toString() + id);
     }
 
     @Override
     public Book getBook(final DSConnection dsCon, final String name) {
-        return (Book) this.cache.get(BOOK + name);
+        return (Book) this.cache.get(CacheTypesEnum.BOOK + name);
     }
 
     @SuppressWarnings("rawtypes")
@@ -489,8 +366,8 @@ public class BOCacheDummyImpl implements CacheImpl {
 
     @SuppressWarnings("rawtypes")
     @Override
-    public Vector getBrokerFeeGrids(final int legalEntityId, final Trade trade,
-            final DSConnection ds) {
+    public Vector getBrokerFeeGrids(final int legalEntityId,
+            final Trade trade, final DSConnection ds) {
 
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
@@ -597,18 +474,20 @@ public class BOCacheDummyImpl implements CacheImpl {
 
     @Override
     public LEContact getContact(final String role, final LegalEntity le,
-            final String contactType, final String productType, final int poId,
-            final DSConnection ds) {
+            final String contactType, final String productType,
+            final int poId, final DSConnection ds) {
 
-        return (LEContact) this.cache.get(LECONTACT + le.getId());
+        return (LEContact) this.cache.get(CacheTypesEnum.LECONTACT.toString()
+                + le.getId());
     }
 
     @Override
     public LEContact getContact(final String role, final LegalEntity le,
-            final String contactType, final String productType, final int poId,
-            final JDate valDate, final Trade trade, final BOTransfer transfer,
-            final DSConnection ds) {
-        return (LEContact) this.cache.get(LECONTACT + le.getId());
+            final String contactType, final String productType,
+            final int poId, final JDate valDate, final Trade trade,
+            final BOTransfer transfer, final DSConnection ds) {
+        return (LEContact) this.cache.get(CacheTypesEnum.LECONTACT.toString()
+                + le.getId());
     }
 
     @Override
@@ -656,7 +535,8 @@ public class BOCacheDummyImpl implements CacheImpl {
     public Country getCountry(final DSConnection ds, final String name) {
 
         final Country rst = new Country();
-        final String isoCode = (String) this.cache.get(COUNTRY + name);
+        final String isoCode = (String) this.cache.get(CacheTypesEnum.COUNTRY
+                + name);
 
         rst.setName(name);
         rst.setISOCode(isoCode);
@@ -695,7 +575,8 @@ public class BOCacheDummyImpl implements CacheImpl {
     }
 
     @Override
-    public Product getExchangedTradedProduct(final DSConnection ds, final int id) {
+    public Product getExchangedTradedProduct(final DSConnection ds,
+            final int id) {
 
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
@@ -912,7 +793,8 @@ public class BOCacheDummyImpl implements CacheImpl {
 
     @Override
     public LegalEntity getLEFromCache(final int id) {
-        return (LegalEntity) this.cache.get(LEGAL_ENTITY + id);
+        return (LegalEntity) this.cache.get(CacheTypesEnum.LEGAL_ENTITY
+                .toString() + id);
     }
 
     @Override
@@ -960,9 +842,10 @@ public class BOCacheDummyImpl implements CacheImpl {
 
     @Override
     public LegalEntity getLegalEntity(final DSConnection ds, final int id) {
-        final LegalEntity rst = (LegalEntity) this.cache.get(LEGAL_ENTITY + id);
-        String country = (String) this.cache.get(LEGAL_ENTITY + id
-                + BOCacheDummyImpl.COUNTRY);
+        final LegalEntity rst = (LegalEntity) this.cache
+                .get(CacheTypesEnum.LEGAL_ENTITY.toString() + id);
+        String country = (String) this.cache.get(CacheTypesEnum.LEGAL_ENTITY
+                .toString() + id + CacheTypesEnum.COUNTRY.toString());
         if (country == null) {
             country = "";
         }
@@ -975,10 +858,10 @@ public class BOCacheDummyImpl implements CacheImpl {
 
     @Override
     public LegalEntity getLegalEntity(final DSConnection ds, final String name) {
-        final LegalEntity rst = (LegalEntity) this.cache.get(LEGAL_ENTITY
-                + name);
-        String country = (String) this.cache.get(LEGAL_ENTITY + name
-                + BOCacheDummyImpl.COUNTRY);
+        final LegalEntity rst = (LegalEntity) this.cache
+                .get(CacheTypesEnum.LEGAL_ENTITY + name);
+        String country = (String) this.cache.get(CacheTypesEnum.LEGAL_ENTITY
+                + name + CacheTypesEnum.COUNTRY.toString());
         if (country == null) {
             country = "";
         }
@@ -993,15 +876,17 @@ public class BOCacheDummyImpl implements CacheImpl {
             final int poId, final int leId, final String leRole,
             final String attributeType) {
 
-        return (LegalEntityAttribute) this.cache.get(LEA + leId + "."
-                + attributeType);
+        return (LegalEntityAttribute) this.cache.get(CacheTypesEnum.LEA
+                .toString() + leId + "." + attributeType);
     }
 
     @SuppressWarnings("rawtypes")
     @Override
-    public Vector getLegalEntityAttributes(final DSConnection ds, final int leId) {
+    public Vector getLegalEntityAttributes(final DSConnection ds,
+            final int leId) {
 
-        return (Vector) this.cache.get(LEGAL_ENTITY + leId + ATTRIBUTES);
+        return (Vector) this.cache.get(CacheTypesEnum.LEGAL_ENTITY.toString()
+                + leId + CacheTypesEnum.ATTRIBUTES);
         // throw new UnsupportedOperationException(
         // "TODO Auto-generated method stub");
     }
@@ -1092,7 +977,7 @@ public class BOCacheDummyImpl implements CacheImpl {
     @Override
     public ManualSDI getManualSDI(final DSConnection ds, final int id) {
 
-        return (ManualSDI) this.cache.get(SDI + id);
+        return (ManualSDI) this.cache.get(CacheTypesEnum.SDI.toString() + id);
     }
 
     @Override
@@ -1378,7 +1263,8 @@ public class BOCacheDummyImpl implements CacheImpl {
     public LegalEntity getProcessingOrg(final DSConnection ds, final Book book) {
 
         Book bookTemp = new Book();
-        bookTemp = (Book) this.cache.get(BOOK + book.getId());
+        bookTemp = (Book) this.cache.get(CacheTypesEnum.BOOK.toString()
+                + book.getId());
         return bookTemp.getLegalEntity();
     }
 
@@ -1547,7 +1433,8 @@ public class BOCacheDummyImpl implements CacheImpl {
     @Override
     public SettleDeliveryInstruction getSettleDeliveryInstruction(
             final DSConnection ds, final int id) {
-        return (SettleDeliveryInstruction) this.cache.get(SDI + id);
+        return (SettleDeliveryInstruction) this.cache.get(CacheTypesEnum.SDI
+                .toString() + id);
     }
 
     @Override
@@ -1880,23 +1767,24 @@ public class BOCacheDummyImpl implements CacheImpl {
     }
 
     public void remove(final Book book) {
-        this.cache.remove(BOOK + book.getId());
-        this.cache.remove(BOOK + book.getName());
+        this.cache.remove(CacheTypesEnum.BOOK.toString() + book.getId());
+        this.cache.remove(CacheTypesEnum.BOOK.toString() + book.getName());
 
     }
 
     public void remove(final LegalEntity le) {
-        this.cache.remove(LEGAL_ENTITY + le.getId());
-        this.cache.remove(LEGAL_ENTITY + le.getCode());
+        this.cache.remove(CacheTypesEnum.LEGAL_ENTITY.toString() + le.getId());
+        this.cache.remove(CacheTypesEnum.LEGAL_ENTITY + le.getCode());
     }
 
     public void remove(final SDI sdi) {
-        this.cache.remove(SDI + sdi.getId());
+        this.cache.remove(CacheTypesEnum.SDI.toString() + sdi.getId());
     }
 
     public void setDomainValueComment(final String s1, final String s2,
             final String s3) {
-        this.cache.put(DOMAIN_VALUE_COMMENT + s1 + "." + s2, s3);
+        this.cache
+                .put(CacheTypesEnum.DOMAIN_VALUE_COMMENT + s1 + "." + s2, s3);
     }
 
     @Override
@@ -1911,6 +1799,13 @@ public class BOCacheDummyImpl implements CacheImpl {
 
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
+    }
+
+    @Override
+    public void addInventoryAggregation(final DSConnection arg0,
+            final InventoryAggregation arg1) {
+        // TODO Auto-generated method stub
+
     }
 
 }

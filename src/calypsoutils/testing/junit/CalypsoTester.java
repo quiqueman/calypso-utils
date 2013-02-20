@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import org.mockito.Mockito;
 
 import calypsoutils.testing.junit.cache.BOCacheDummyImpl;
+import calypsoutils.testing.junit.cache.CacheDummyImpl;
 import calypsoutils.testing.junit.cache.LocalCacheDummyImpl;
 
 import com.calypso.tk.bo.BOCache;
@@ -65,7 +66,7 @@ public class CalypsoTester {
         DSConnection.setDefault(null);
     }
 
-    public BOCacheDummyImpl getCacheImpl() {
+    public CacheDummyImpl getCacheImpl() {
         return this.boCacheImpl;
     }
 
