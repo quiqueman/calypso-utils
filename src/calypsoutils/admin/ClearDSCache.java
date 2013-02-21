@@ -22,7 +22,7 @@ import com.calypso.tk.util.ConnectionUtil;
  */
 public class ClearDSCache {
 
-    private static final String USAGE_TEXT = "Usage: java ClearDSCache -env <environment>"
+    static final String USAGE_TEXT = "Usage: java ClearDSCache -env <environment>"
             + " -user <user> -password <password> [-noaudit] [-nogui]";
 
     /**
@@ -124,7 +124,7 @@ public class ClearDSCache {
 
     void error(final String title, final String message) {
         if (this.noGui) {
-            System.out.println(title + ": " + message);
+            System.err.println(title + ": " + message);
         } else {
             JOptionPane.showMessageDialog(null, message, title,
                     JOptionPane.ERROR_MESSAGE);
