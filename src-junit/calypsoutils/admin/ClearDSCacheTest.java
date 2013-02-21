@@ -18,12 +18,12 @@ import com.calypso.tk.event.PSException;
 import com.calypso.tk.util.ConnectException;
 
 /**
- * Test cases for class ClearDSCacheTest
+ * Test cases for class ClearDSCacheTest.
  * 
  */
 public class ClearDSCacheTest {
     /**
-     * Resource under test (rut)
+     * Resource under test (rut).
      */
     private final ClearDSCache rut;
 
@@ -89,8 +89,8 @@ public class ClearDSCacheTest {
      */
     @Test
     public void testCheckParamsNoUserName() {
-        final String[] args = { "-env", "env", "-usuario", "user",
-                "-password", "passwd", "-noaudit" };
+        final String[] args = { "-env", "env", "-usuario", "user", "-password",
+                "passwd", "-noaudit" };
         final boolean result = this.rut.checkParams(args);
         assertFalse(result);
         assertNull(this.rut.user);
@@ -113,8 +113,8 @@ public class ClearDSCacheTest {
     @Test
     public void testMainBadArguments() throws ConnectException, PSException,
             RemoteException, SerializationException {
-        final String[] args = { "-env", "env", "-usuario", "user",
-                "-password", "passwd", "-nogui" };
+        final String[] args = { "-env", "env", "-usuario", "user", "-password",
+                "passwd", "-nogui" };
         ClearDSCache.main(args);
         this.systemErr.flush();
         assertEquals("Bad arguments: " + ClearDSCache.USAGE_TEXT + "\n",
