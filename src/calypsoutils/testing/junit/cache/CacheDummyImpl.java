@@ -14,13 +14,17 @@ import com.calypso.tk.refdata.LegalEntityAttribute;
 import com.calypso.tk.refdata.PartySDI;
 import com.calypso.tk.refdata.SDI;
 
+/**
+ * This class is used to replace the real Calypso cache in unit testing.
+ * 
+ */
 public abstract class CacheDummyImpl {
 
     protected final HashMap<String, Object> cache;
     protected Hashtable<String, Object> currencyDefaults;
 
     /**
-     * Initialize the cache
+     * Initialize the cache.
      */
     public CacheDummyImpl() {
         this.cache = new HashMap<String, Object>();
