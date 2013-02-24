@@ -6,11 +6,9 @@ import java.util.List;
 import java.util.Vector;
 
 import com.calypso.tk.bo.FeeDefinition;
-import com.calypso.tk.core.Book;
 import com.calypso.tk.core.Holiday;
 import com.calypso.tk.core.JDate;
 import com.calypso.tk.core.JDatetime;
-import com.calypso.tk.core.LegalEntity;
 import com.calypso.tk.core.Tenor;
 import com.calypso.tk.event.PSEventAdmin;
 import com.calypso.tk.event.PSEventDomainChange;
@@ -22,21 +20,22 @@ import com.calypso.tk.mo.TradeOpenQuantity;
 import com.calypso.tk.product.CDSSettlementMatrix;
 import com.calypso.tk.product.CDSSettlementMatrixConfig;
 import com.calypso.tk.product.Commodity;
-import com.calypso.tk.product.commodities.schedulegeneration.intraday.IntradayConfiguration;
-import com.calypso.tk.refdata.CommodityReset;
 import com.calypso.tk.refdata.CurrencyDefault;
 import com.calypso.tk.refdata.CurrencyPair;
 import com.calypso.tk.refdata.FXOptExpTZ;
 import com.calypso.tk.refdata.FXReset;
 import com.calypso.tk.refdata.RateIndex;
 import com.calypso.tk.refdata.RateIndexDefaults;
-import com.calypso.tk.refdata.SDI;
 import com.calypso.tk.service.DSConnection;
 import com.calypso.tk.service.LocalCacheImplementation;
 import com.calypso.tk.util.PositionArray;
 import com.calypso.tk.util.SettlePositionArray;
 import com.calypso.tk.util.SettlePositionBucketArray;
 
+/**
+ * This class is used to replace the real Calypso cache in unit testing.
+ * 
+ */
 public class LocalCacheDummyImpl extends CacheDummyImpl implements
         LocalCacheImplementation {
 
@@ -44,127 +43,212 @@ public class LocalCacheDummyImpl extends CacheDummyImpl implements
 
     private RateIndexDefaults rateIndexDefaults;
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.calypso.tk.service.LocalCacheImplementation#
+     * getAccountSweepingConfigHashMap()
+     */
     @Override
     public HashMap getAccountSweepingConfigHashMap() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.calypso.tk.service.LocalCacheImplementation#
+     * getAllCDSSettlementMatrixItems()
+     */
     @Override
     public Vector getAllCDSSettlementMatrixItems() {
-
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getAllCurrencyIndexes
+     * (com.calypso.tk.service.DSConnection, java.lang.String)
+     */
     @Override
-    public Vector getAllCurrencyIndexes(final DSConnection ds,
-            final String currency) {
-
+    public Vector getAllCurrencyIndexes(final DSConnection arg0,
+            final String arg1) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getAllCurrencyRateIndexes
+     * (com.calypso.tk.service.DSConnection, java.lang.String)
+     */
     @Override
-    public Vector getAllCurrencyRateIndexes(final DSConnection ds,
-            final String currency) {
+    public Vector getAllCurrencyRateIndexes(final DSConnection arg0,
+            final String arg1) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.calypso.tk.service.LocalCacheImplementation#getAllFXOptExpTZ()
+     */
     @Override
     public Vector getAllFXOptExpTZ() {
-
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getAllIndexes(com.calypso
+     * .tk.service.DSConnection, java.lang.String, java.lang.String)
+     */
     @Override
-    public Vector getAllIndexes(final DSConnection ds, final String currency,
-            final String indexType) {
-
+    public Vector getAllIndexes(final DSConnection arg0, final String arg1,
+            final String arg2) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getAllNames(com.calypso
+     * .tk.service.DSConnection, int)
+     */
     @Override
-    public Vector getAllNames(final DSConnection ds, final int what) {
-
+    public Vector getAllNames(final DSConnection arg0, final int arg1) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getAllowWorkflow(com.
+     * calypso.tk.service.DSConnection)
+     */
     @Override
-    public boolean getAllowWorkflow(final DSConnection ds) {
-
-        return false;
-    }
-
-    @SuppressWarnings("rawtypes")
-    @Override
-    public Vector getAllRateIndexeDefaults(final DSConnection ds) {
-
+    public boolean getAllowWorkflow(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getAllRateIndexeDefaults
+     * (com.calypso.tk.service.DSConnection)
+     */
     @Override
-    public Vector getAllRateIndexes(final DSConnection ds) {
-
+    public Vector getAllRateIndexeDefaults(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getAllRateIndexes(com
+     * .calypso.tk.service.DSConnection)
+     */
     @Override
-    public CurrencyPair getBaseCurrencyPair(final CurrencyDefault quoting,
-            final JDate date) {
-        return null;
-        // throw new UnsupportedOperationException(
-        // "TODO Auto-generated method stub");
+    public Vector getAllRateIndexes(final DSConnection arg0) {
+        throw new UnsupportedOperationException(
+                "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getBaseCurrencyPair(com
+     * .calypso.tk.refdata.CurrencyDefault, com.calypso.tk.core.JDate)
+     */
+    @Override
+    public CurrencyPair getBaseCurrencyPair(final CurrencyDefault arg0,
+            final JDate arg1) {
+        throw new UnsupportedOperationException(
+                "TODO Auto-generated method stub");
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getBetaValue(com.calypso
+     * .tk.service.DSConnection, java.lang.String, java.lang.String,
+     * com.calypso.tk.core.JDatetime, java.lang.String)
+     */
     @Override
     public BetaValue getBetaValue(final DSConnection arg0, final String arg1,
             final String arg2, final JDatetime arg3, final String arg4) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
-        // throw new
-        // UnsupportedOperationException("TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getBillingGridRoles(com
+     * .calypso.tk.service.DSConnection)
+     */
     @Override
-    public Vector getBillingGridRoles(final DSConnection ds) {
-
+    public Vector getBillingGridRoles(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getBookId(com.calypso
+     * .tk.service.DSConnection, java.lang.String)
+     */
     @Override
-    public int getBookId(final DSConnection ds, final String name) {
+    public int getBookId(final DSConnection arg0, final String arg1) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getBookName(com.calypso
+     * .tk.service.DSConnection, int)
+     */
     @Override
-    public String getBookName(final DSConnection ds, final int id) {
-
+    public String getBookName(final DSConnection arg0, final int arg1) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getBookName(com.calypso
+     * .tk.service.DSConnection, java.lang.Integer)
+     */
     @Override
-    public String getBookName(final DSConnection ds, final Integer id) {
-
+    public String getBookName(final DSConnection arg0, final Integer arg1) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
@@ -174,69 +258,82 @@ public class LocalCacheDummyImpl extends CacheDummyImpl implements
         return defaultDec;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.calypso.tk.service.LocalCacheImplementation#
+     * getCDSSettlementMatrixConfiguration(java.lang.String)
+     */
     @Override
     public CDSSettlementMatrixConfig getCDSSettlementMatrixConfiguration(
-            final String s) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public CDSSettlementMatrix getCDSSettlementMatrixItem(
-            final int matrixItemId) {
-
+            final String arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getCDSSettlementMatrixItem
+     * (int)
+     */
+    @Override
+    public CDSSettlementMatrix getCDSSettlementMatrixItem(final int arg0) {
+        throw new UnsupportedOperationException(
+                "TODO Auto-generated method stub");
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.calypso.tk.service.LocalCacheImplementation#
+     * getCommodityQuoteNameDescriptors(com.calypso.tk.product.Commodity,
+     * java.lang.String, java.lang.String)
+     */
     @Override
     public List<CommodityQuoteNameDescriptor> getCommodityQuoteNameDescriptors(
-            final Commodity commodity, final String s, final String s1)
+            final Commodity arg0, final String arg1, final String arg2)
             throws MarketDataException {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    public CommodityReset getCommodityReset(final DSConnection ds,
-            final Commodity commodity, final String currency, final String name) {
-
-        throw new UnsupportedOperationException(
-                "TODO Auto-generated method stub");
-    }
-
-    public CommodityReset getCommodityReset(final DSConnection ds, final int id) {
-
-        throw new UnsupportedOperationException(
-                "TODO Auto-generated method stub");
-    }
-
-    @SuppressWarnings("rawtypes")
-    public Vector getCommodityResets(final DSConnection ds) {
-
-        throw new UnsupportedOperationException(
-                "TODO Auto-generated method stub");
-    }
-
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getConversionFactor(java
+     * .lang.String, java.lang.String, java.lang.String,
+     * com.calypso.tk.core.JDate)
+     */
     @Override
-    public double getConversionFactor(final String s, final String s1,
-            final String s2, final JDate jdate) {
-        // TODO Auto-generated method stub
-        return 0;
+    public double getConversionFactor(final String arg0, final String arg1,
+            final String arg2, final JDate arg3) {
+        throw new UnsupportedOperationException(
+                "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.calypso.tk.service.LocalCacheImplementation#getCurrencies()
+     */
     @Override
     public Vector getCurrencies() {
-
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getCurrencyByGroup(java
+     * .lang.String)
+     */
     @Override
-    public Vector getCurrencyByGroup(final String group) {
-
+    public Vector getCurrencyByGroup(final String arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
@@ -253,27 +350,43 @@ public class LocalCacheDummyImpl extends CacheDummyImpl implements
         return this.currencyDefaults;
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getCurrencyIndexes(com
+     * .calypso.tk.service.DSConnection, java.lang.String, java.lang.String)
+     */
     @Override
-    public Vector getCurrencyIndexes(final DSConnection ds,
-            final String currency, final String indexType) {
-
+    public Vector getCurrencyIndexes(final DSConnection arg0,
+            final String arg1, final String arg2) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getCurrencyPair(java.
+     * lang.String, java.lang.String)
+     */
     @Override
-    public CurrencyPair getCurrencyPair(final String primary,
-            final String quoting) throws MarketDataException {
-
+    public CurrencyPair getCurrencyPair(final String arg0, final String arg1)
+            throws MarketDataException {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getCurrencyPairs(java
+     * .lang.String)
+     */
     @Override
-    public Vector getCurrencyPairs(final String quoting) {
-
+    public Vector getCurrencyPairs(final String arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
@@ -283,10 +396,15 @@ public class LocalCacheDummyImpl extends CacheDummyImpl implements
         return this.holiday;
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getDeliverableCurrencies
+     * ()
+     */
     @Override
     public Vector getDeliverableCurrencies() {
-
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
@@ -301,8 +419,7 @@ public class LocalCacheDummyImpl extends CacheDummyImpl implements
 
     @SuppressWarnings("rawtypes")
     @Override
-    public Vector getDomainValues(final DSConnection ds,
-            final String domainName) {
+    public Vector getDomainValues(final DSConnection ds, final String domainName) {
         final Vector result = (Vector) this.cache
                 .get(CacheTypesEnum.DOMAIN_VALUES + domainName);
         return result;
@@ -314,51 +431,78 @@ public class LocalCacheDummyImpl extends CacheDummyImpl implements
 
         final CurrencyPair cp = new CurrencyPair();
         return cp;
-        // throw new UnsupportedOperationException(
-        // "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getFeeDefinition(java
+     * .lang.String)
+     */
     @Override
-    public FeeDefinition getFeeDefinition(final String type) {
-
+    public FeeDefinition getFeeDefinition(final String arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.calypso.tk.service.LocalCacheImplementation#getFeeDefinitions()
+     */
     @Override
     public Hashtable getFeeDefinitions() {
-
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getFeeDefinitions(java
+     * .lang.String)
+     */
     @Override
-    public Hashtable getFeeDefinitions(final String role) {
-
+    public Hashtable getFeeDefinitions(final String arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.calypso.tk.service.LocalCacheImplementation#getFeeTypes()
+     */
     @Override
     public Vector getFeeTypes() {
-
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getFeeTypes(java.lang
+     * .String)
+     */
     @Override
-    public Vector getFeeTypes(final String role) {
-
+    public Vector getFeeTypes(final String arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getFXOptExpTZ(java.lang
+     * .String)
+     */
     @Override
-    public FXOptExpTZ getFXOptExpTZ(final String name) {
+    public FXOptExpTZ getFXOptExpTZ(final String arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
@@ -370,98 +514,152 @@ public class LocalCacheDummyImpl extends CacheDummyImpl implements
         return result;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getFXReset(com.calypso
+     * .tk.service.DSConnection, int)
+     */
     @Override
-    public FXReset getFXReset(final DSConnection ds, final int id) {
-
+    public FXReset getFXReset(final DSConnection arg0, final int arg1) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getFXReset(com.calypso
+     * .tk.service.DSConnection, java.lang.String, java.lang.String,
+     * java.lang.String)
+     */
     @Override
-    public FXReset getFXReset(final DSConnection ds, final String primary,
-            final String quoting, final String name) {
-
+    public FXReset getFXReset(final DSConnection arg0, final String arg1,
+            final String arg2, final String arg3) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getFXResets(com.calypso
+     * .tk.service.DSConnection)
+     */
     @Override
-    public Vector getFXResets(final DSConnection ds) {
-
+    public Vector getFXResets(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getFXResets(com.calypso
+     * .tk.service.DSConnection, java.lang.String, java.lang.String)
+     */
     @Override
-    public Vector getFXResets(final DSConnection ds, final String primary,
-            final String quoting) {
-
+    public Vector getFXResets(final DSConnection arg0, final String arg1,
+            final String arg2) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    public IntradayConfiguration getIntradayConfiguration(
-            final DSConnection arg0, final int arg1) {
-        throw new UnsupportedOperationException(
-                "TODO Auto-generated method stub");
-        // throw new
-        // UnsupportedOperationException("TODO Auto-generated method stub");
-    }
-
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getMarketPlaces(com.calypso
+     * .tk.service.DSConnection)
+     */
     @Override
-    public Vector getMarketPlaces(final DSConnection ds) {
-
+    public Vector getMarketPlaces(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getNonDeliverableCurrencies
+     * ()
+     */
     @Override
     public Vector getNonDeliverableCurrencies() {
-
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getPositions(com.calypso
+     * .tk.service.DSConnection, com.calypso.tk.mo.PosCashFlow)
+     */
     @Override
-    public PositionArray getPositions(final DSConnection ds,
-            final PosCashFlow pc) {
-
+    public PositionArray getPositions(final DSConnection arg0,
+            final PosCashFlow arg1) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getPositions(com.calypso
+     * .tk.service.DSConnection, com.calypso.tk.mo.TradeOpenQuantity)
+     */
     @Override
-    public PositionArray getPositions(final DSConnection ds,
-            final TradeOpenQuantity qty) {
-
+    public PositionArray getPositions(final DSConnection arg0,
+            final TradeOpenQuantity arg1) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getPreciousMetalCurrencies
+     * ()
+     */
     @Override
     public Vector getPreciousMetalCurrencies() {
-
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getProductGroupListHashMap
+     * ()
+     */
     @Override
     public HashMap getProductGroupListHashMap() {
-
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getRateIndex(com.calypso
+     * .tk.service.DSConnection, java.lang.String, java.lang.String,
+     * com.calypso.tk.core.Tenor, java.lang.String)
+     */
     @Override
-    public RateIndex getRateIndex(final DSConnection ds,
-            final String currency, final String index, final Tenor tenor,
-            final String source) {
+    public RateIndex getRateIndex(final DSConnection arg0, final String arg1,
+            final String arg2, final Tenor arg3, final String arg4) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
@@ -472,153 +670,254 @@ public class LocalCacheDummyImpl extends CacheDummyImpl implements
         return this.rateIndexDefaults;
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getRateIndexSources(com
+     * .calypso.tk.service.DSConnection, java.lang.String, java.lang.String,
+     * com.calypso.tk.core.Tenor)
+     */
     @Override
-    public Vector getRateIndexSources(final DSConnection ds,
-            final String currency, final String name, final Tenor tenor) {
-
+    public Vector getRateIndexSources(final DSConnection arg0,
+            final String arg1, final String arg2, final Tenor arg3) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getRateIndexTenors(com
+     * .calypso.tk.service.DSConnection, java.lang.String, java.lang.String)
+     */
     @Override
-    public Vector getRateIndexTenors(final DSConnection ds,
-            final String currency, final String name) {
+    public Vector getRateIndexTenors(final DSConnection arg0,
+            final String arg1, final String arg2) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    @SuppressWarnings("rawtypes")
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getRules(java.lang.String
+     * )
+     */
     @Override
-    public Vector getRules(final String eventClass) {
-
+    public Vector getRules(final String arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getSettlePositionBuckets
+     * (com.calypso.tk.service.DSConnection, com.calypso.tk.mo.PosCashFlow,
+     * java.lang.String, com.calypso.tk.core.JDate,
+     * com.calypso.tk.core.JDatetime)
+     */
     @Override
     public SettlePositionBucketArray getSettlePositionBuckets(
-            final DSConnection ds, final PosCashFlow pc,
-            final String dateType, final JDate date,
-            final JDatetime bucketDatetime) {
-
+            final DSConnection arg0, final PosCashFlow arg1, final String arg2,
+            final JDate arg3, final JDatetime arg4) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getSettlePositionBuckets
+     * (com.calypso.tk.service.DSConnection,
+     * com.calypso.tk.mo.TradeOpenQuantity, java.lang.String,
+     * com.calypso.tk.core.JDate, com.calypso.tk.core.JDatetime)
+     */
     @Override
     public SettlePositionBucketArray getSettlePositionBuckets(
-            final DSConnection ds, final TradeOpenQuantity qty,
-            final String dateType, final JDate date,
-            final JDatetime bucketDatetime) {
-
+            final DSConnection arg0, final TradeOpenQuantity arg1,
+            final String arg2, final JDate arg3, final JDatetime arg4) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getSettlePositions(com
+     * .calypso.tk.service.DSConnection, com.calypso.tk.mo.PosCashFlow,
+     * com.calypso.tk.core.JDate, java.lang.String)
+     */
     @Override
-    public SettlePositionArray getSettlePositions(final DSConnection ds,
-            final PosCashFlow pc, final JDate date, final String dateType) {
-
+    public SettlePositionArray getSettlePositions(final DSConnection arg0,
+            final PosCashFlow arg1, final JDate arg2, final String arg3) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#getSettlePositions(com
+     * .calypso.tk.service.DSConnection, com.calypso.tk.mo.TradeOpenQuantity,
+     * com.calypso.tk.core.JDate, java.lang.String)
+     */
     @Override
-    public SettlePositionArray getSettlePositions(final DSConnection ds,
-            final TradeOpenQuantity qty, final JDate date,
-            final String dateType) {
-
+    public SettlePositionArray getSettlePositions(final DSConnection arg0,
+            final TradeOpenQuantity arg1, final JDate arg2, final String arg3) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
-    public String getUsername(final String s) {
-        return (String) this.cache.get("UserName." + s);
-    }
-
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#initCache(com.calypso
+     * .tk.service.DSConnection)
+     */
     @Override
-    public void initCache(final DSConnection ds) {
+    public void initCache(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#newEvent(com.calypso.
+     * tk.service.DSConnection, com.calypso.tk.event.PSEventDomainChange)
+     */
     @Override
-    public void newEvent(final DSConnection ds, final PSEventDomainChange event) {
+    public void newEvent(final DSConnection arg0, final PSEventDomainChange arg1) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#newEvent(com.calypso.
+     * tk.event.PSEventAdmin)
+     */
     @Override
-    public void newEvent(final PSEventAdmin event) {
+    public void newEvent(final PSEventAdmin arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#refreshCurrencyUtil(com
+     * .calypso.tk.service.DSConnection)
+     */
     @Override
-    public void refreshCurrencyUtil(final DSConnection ds) {
+    public void refreshCurrencyUtil(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#refreshDomains(com.calypso
+     * .tk.service.DSConnection)
+     */
     @Override
-    public void refreshDomains(final DSConnection ds) {
+    public void refreshDomains(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#refreshFeeDefinition(
+     * com.calypso.tk.service.DSConnection)
+     */
     @Override
-    public void refreshFeeDefinition(final DSConnection ds) {
+    public void refreshFeeDefinition(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#refreshFXReset(com.calypso
+     * .tk.service.DSConnection)
+     */
     @Override
-    public void refreshFXReset(final DSConnection ds) {
+    public void refreshFXReset(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#refreshHolidays(com.calypso
+     * .tk.service.DSConnection, com.calypso.tk.event.PSEventDomainChange)
+     */
     @Override
-    public void refreshHolidays(final DSConnection ds,
-            final PSEventDomainChange event) {
+    public void refreshHolidays(final DSConnection arg0,
+            final PSEventDomainChange arg1) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#refreshMimeTypes(com.
+     * calypso.tk.service.DSConnection)
+     */
     @Override
-    public void refreshMimeTypes(final DSConnection ds) {
+    public void refreshMimeTypes(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#refreshRateIndexDefaults
+     * (com.calypso.tk.service.DSConnection)
+     */
     @Override
-    public void refreshRateIndexDefaults(final DSConnection ds) {
+    public void refreshRateIndexDefaults(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.calypso.tk.service.LocalCacheImplementation#refreshRateIndexes(com
+     * .calypso.tk.service.DSConnection)
+     */
     @Override
-    public void refreshRateIndexes(final DSConnection ds) {
+    public void refreshRateIndexes(final DSConnection arg0) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
-    }
-
-    public void remove(final Book book) {
-        this.cache.remove(CacheTypesEnum.BOOK.toString() + book.getId());
-        this.cache.remove(CacheTypesEnum.BOOK.toString() + book.getName());
-
-    }
-
-    public void remove(final LegalEntity le) {
-        this.cache.remove(CacheTypesEnum.LEGAL_ENTITY.toString() + le.getId());
-        this.cache.remove(CacheTypesEnum.LEGAL_ENTITY.toString()
-                + le.getCode());
-    }
-
-    public void remove(final SDI sdi) {
-        this.cache.remove(CacheTypesEnum.SDI.toString() + sdi.getId());
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -628,22 +927,8 @@ public class LocalCacheDummyImpl extends CacheDummyImpl implements
     }
 
     @Override
-    public void setCurrentHoliday(final Holiday holiday) {
-        this.holiday = holiday;
-    }
-
-    public void setDomainValueComment(final String s1, final String s2,
-            final String s3) {
-        this.cache
-                .put(CacheTypesEnum.DOMAIN_VALUE_COMMENT + s1 + "." + s2, s3);
-    }
-
-    /**
-     * @param rateIndexDefaults
-     *            the rateIndexDefaults to set
-     */
-    public void setRateIndexDefaults(final RateIndexDefaults rateIndexDefaults) {
-        this.rateIndexDefaults = rateIndexDefaults;
+    public void setCurrentHoliday(final Holiday aholiday) {
+        this.holiday = aholiday;
     }
 
 }

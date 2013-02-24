@@ -36,7 +36,7 @@ public class CalypsoTester {
 
     /**
      * You should use the UnitTestHelperAccess to retrieve instance of this
-     * class to ensure free all mocked objects after each test
+     * class to ensure free all mocked objects after each test.
      */
     protected CalypsoTester() {
         // Initialize the dummy BOCache
@@ -91,7 +91,7 @@ public class CalypsoTester {
     }
 
     /**
-     * when a remote object is requested to the DSConnection return the mock
+     * when a remote object is requested to the DSConnection return the mock.
      */
     protected void mockDsConnection() {
         when(this.dsConnection.getRemoteReferenceData()).thenReturn(
@@ -103,7 +103,7 @@ public class CalypsoTester {
         when(this.dsConnection.getRemoteAccess()).thenReturn(this.remoteAccess);
     }
 
-    /** reset all the mocked objects as well as the caches */
+    /** reset all the mocked objects as well as the caches. */
     public void reset() {
         this.boCacheImpl.clear();
         this.localCacheImpl.clear();
@@ -122,8 +122,8 @@ public class CalypsoTester {
         this.boCacheImpl = cacheImpl;
     }
 
-    public void setDsConnection(final DSConnection dsConnection) {
-        this.dsConnection = dsConnection;
+    public void setDsConnection(final DSConnection dsConn) {
+        this.dsConnection = dsConn;
     }
 
     public void setReferenceData(final RemoteReferenceData referenceData) {

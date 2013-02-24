@@ -65,14 +65,12 @@ import com.calypso.tk.mo.TradeFilter;
 import com.calypso.tk.product.BondDefault;
 import com.calypso.tk.product.CA;
 import com.calypso.tk.product.CFD;
-import com.calypso.tk.product.Commodity;
 import com.calypso.tk.product.FX;
 import com.calypso.tk.product.FutureContract;
 import com.calypso.tk.product.PositionCash;
 import com.calypso.tk.product.PositionFXNDF;
 import com.calypso.tk.product.ReferenceEntity;
 import com.calypso.tk.product.Ticker;
-import com.calypso.tk.product.commodities.schedulegeneration.intraday.IntradayConfiguration;
 import com.calypso.tk.product.eXSP.typing.ConfigurableType;
 import com.calypso.tk.refdata.Account;
 import com.calypso.tk.refdata.AccountInterestConfig;
@@ -82,7 +80,6 @@ import com.calypso.tk.refdata.BondBenchmark;
 import com.calypso.tk.refdata.BookValCcy;
 import com.calypso.tk.refdata.CFDContractDefinition;
 import com.calypso.tk.refdata.CFDCountryGrid;
-import com.calypso.tk.refdata.CommodityReset;
 import com.calypso.tk.refdata.Country;
 import com.calypso.tk.refdata.FeeBillingRule;
 import com.calypso.tk.refdata.FeeGrid;
@@ -99,7 +96,6 @@ import com.calypso.tk.refdata.MarginCallConfig;
 import com.calypso.tk.refdata.MessageGroup;
 import com.calypso.tk.refdata.NettingMethod;
 import com.calypso.tk.refdata.RoleDisabled;
-import com.calypso.tk.refdata.SDI;
 import com.calypso.tk.refdata.SettleDeliveryInstruction;
 import com.calypso.tk.refdata.StaticDataFilter;
 import com.calypso.tk.refdata.TemplateDefaults;
@@ -114,6 +110,10 @@ import com.calypso.tk.service.DSConnection;
 import com.calypso.tk.util.ManualSDIArray;
 import com.calypso.tk.util.SDIArray;
 
+/**
+ * This class is used to replace the real Calypso BOCache in unit testing.
+ * 
+ */
 public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
 
     @Override
@@ -167,8 +167,7 @@ public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
 
     @Override
     public Account getAccount(final DSConnection ds, final int id) {
-        return (Account) this.cache
-                .get(CacheTypesEnum.ACCOUNT.toString() + id);
+        return (Account) this.cache.get(CacheTypesEnum.ACCOUNT.toString() + id);
     }
 
     @Override
@@ -257,9 +256,8 @@ public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
     }
 
     @Override
-    public SDIArray getBeneSettleDeliveryInstructions(
-            final String beneficiary, final String role,
-            final DSConnection dsCon) {
+    public SDIArray getBeneSettleDeliveryInstructions(final String beneficiary,
+            final String role, final DSConnection dsCon) {
 
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
@@ -366,8 +364,8 @@ public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
 
     @SuppressWarnings("rawtypes")
     @Override
-    public Vector getBrokerFeeGrids(final int legalEntityId,
-            final Trade trade, final DSConnection ds) {
+    public Vector getBrokerFeeGrids(final int legalEntityId, final Trade trade,
+            final DSConnection ds) {
 
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
@@ -428,26 +426,6 @@ public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
                 "TODO Auto-generated method stub");
     }
 
-    public CommodityReset getCommodityReset(final DSConnection ds,
-            final Commodity commodity, final String currency, final String name) {
-
-        throw new UnsupportedOperationException(
-                "TODO Auto-generated method stub");
-    }
-
-    public CommodityReset getCommodityReset(final DSConnection ds, final int id) {
-
-        throw new UnsupportedOperationException(
-                "TODO Auto-generated method stub");
-    }
-
-    @SuppressWarnings("rawtypes")
-    public Vector getCommodityResets(final DSConnection ds) {
-
-        throw new UnsupportedOperationException(
-                "TODO Auto-generated method stub");
-    }
-
     @Override
     public ConfigurableType getConfigurableType(final DSConnection ds,
             final String name) {
@@ -474,8 +452,8 @@ public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
 
     @Override
     public LEContact getContact(final String role, final LegalEntity le,
-            final String contactType, final String productType,
-            final int poId, final DSConnection ds) {
+            final String contactType, final String productType, final int poId,
+            final DSConnection ds) {
 
         return (LEContact) this.cache.get(CacheTypesEnum.LECONTACT.toString()
                 + le.getId());
@@ -483,9 +461,9 @@ public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
 
     @Override
     public LEContact getContact(final String role, final LegalEntity le,
-            final String contactType, final String productType,
-            final int poId, final JDate valDate, final Trade trade,
-            final BOTransfer transfer, final DSConnection ds) {
+            final String contactType, final String productType, final int poId,
+            final JDate valDate, final Trade trade, final BOTransfer transfer,
+            final DSConnection ds) {
         return (LEContact) this.cache.get(CacheTypesEnum.LECONTACT.toString()
                 + le.getId());
     }
@@ -575,8 +553,7 @@ public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
     }
 
     @Override
-    public Product getExchangedTradedProduct(final DSConnection ds,
-            final int id) {
+    public Product getExchangedTradedProduct(final DSConnection ds, final int id) {
 
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
@@ -732,14 +709,6 @@ public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
                 "TODO Auto-generated method stub");
     }
 
-    public IntradayConfiguration getIntradayConfiguration(
-            final DSConnection arg0, final int arg1) {
-        throw new UnsupportedOperationException(
-                "TODO Auto-generated method stub");
-        // throw new
-        // UnsupportedOperationException("TODO Auto-generated method stub");
-    }
-
     @Override
     public InventoryAggregation getInventoryAggregation(final DSConnection ds,
             final int aggId) {
@@ -882,8 +851,7 @@ public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
 
     @SuppressWarnings("rawtypes")
     @Override
-    public Vector getLegalEntityAttributes(final DSConnection ds,
-            final int leId) {
+    public Vector getLegalEntityAttributes(final DSConnection ds, final int leId) {
 
         return (Vector) this.cache.get(CacheTypesEnum.LEGAL_ENTITY.toString()
                 + leId + CacheTypesEnum.ATTRIBUTES);
@@ -1604,10 +1572,6 @@ public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
                 "TODO Auto-generated method stub");
     }
 
-    public String getUsername(final String s) {
-        return (String) this.cache.get("UserName." + s);
-    }
-
     @SuppressWarnings("rawtypes")
     @Override
     public Vector getUserWorkflowConfigs(final DSConnection ds) {
@@ -1764,27 +1728,6 @@ public class BOCacheDummyImpl extends CacheDummyImpl implements CacheImpl {
     public void putTickersInCache(final Vector v) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");
-    }
-
-    public void remove(final Book book) {
-        this.cache.remove(CacheTypesEnum.BOOK.toString() + book.getId());
-        this.cache.remove(CacheTypesEnum.BOOK.toString() + book.getName());
-
-    }
-
-    public void remove(final LegalEntity le) {
-        this.cache.remove(CacheTypesEnum.LEGAL_ENTITY.toString() + le.getId());
-        this.cache.remove(CacheTypesEnum.LEGAL_ENTITY + le.getCode());
-    }
-
-    public void remove(final SDI sdi) {
-        this.cache.remove(CacheTypesEnum.SDI.toString() + sdi.getId());
-    }
-
-    public void setDomainValueComment(final String s1, final String s2,
-            final String s3) {
-        this.cache
-                .put(CacheTypesEnum.DOMAIN_VALUE_COMMENT + s1 + "." + s2, s3);
     }
 
     @Override

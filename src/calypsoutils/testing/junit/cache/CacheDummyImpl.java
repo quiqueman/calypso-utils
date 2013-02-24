@@ -59,8 +59,7 @@ public abstract class CacheDummyImpl {
     }
 
     public final void add(final LegalEntity le) {
-        this.cache
-                .put(CacheTypesEnum.LEGAL_ENTITY.toString() + le.getId(), le);
+        this.cache.put(CacheTypesEnum.LEGAL_ENTITY.toString() + le.getId(), le);
         this.cache.put(CacheTypesEnum.LEGAL_ENTITY + le.getCode(), le);
         this.cache.put(CacheTypesEnum.LEGAL_ENTITY.toString() + le.getId()
                 + CacheTypesEnum.COUNTRY, le.getCountry());
@@ -110,8 +109,7 @@ public abstract class CacheDummyImpl {
                 + domainValue, comment);
     }
 
-    public final void addLongName(final String longName,
-            final PartySDI partySDI) {
+    public final void addLongName(final String longName, final PartySDI partySDI) {
         this.cache.put(
                 CacheTypesEnum.LONG_NAME.toString() + partySDI.getPartyId(),
                 longName);
@@ -125,4 +123,18 @@ public abstract class CacheDummyImpl {
         this.cache.clear();
     }
 
+    public void remove(final Book book) {
+        this.cache.remove(CacheTypesEnum.BOOK.toString() + book.getId());
+        this.cache.remove(CacheTypesEnum.BOOK.toString() + book.getName());
+
+    }
+
+    public void remove(final LegalEntity le) {
+        this.cache.remove(CacheTypesEnum.LEGAL_ENTITY.toString() + le.getId());
+        this.cache.remove(CacheTypesEnum.LEGAL_ENTITY + le.getCode());
+    }
+
+    public void remove(final SDI sdi) {
+        this.cache.remove(CacheTypesEnum.SDI.toString() + sdi.getId());
+    }
 }
