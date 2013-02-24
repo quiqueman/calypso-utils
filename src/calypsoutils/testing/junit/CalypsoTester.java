@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 import org.mockito.Mockito;
 
 import calypsoutils.testing.junit.cache.BOCacheDummyImpl;
-import calypsoutils.testing.junit.cache.CacheDummyImpl;
 import calypsoutils.testing.junit.cache.LocalCacheDummyImpl;
 
 import com.calypso.tk.bo.BOCache;
@@ -34,11 +33,7 @@ public class CalypsoTester {
     LocalCacheDummyImpl localCacheImpl;
     DSConnection dsConnection;
 
-    /**
-     * You should use the UnitTestHelperAccess to retrieve instance of this
-     * class to ensure free all mocked objects after each test.
-     */
-    protected CalypsoTester() {
+    public CalypsoTester() {
         // Initialize the dummy BOCache
         this.boCacheImpl = new BOCacheDummyImpl();
         this.localCacheImpl = new LocalCacheDummyImpl();
@@ -64,30 +59,6 @@ public class CalypsoTester {
         BOCache.setImpl(null);
         LocalCache.setImpl(null);
         DSConnection.setDefault(null);
-    }
-
-    public CacheDummyImpl getCacheImpl() {
-        return this.boCacheImpl;
-    }
-
-    public DSConnection getDsConnection() {
-        return this.dsConnection;
-    }
-
-    public RemoteReferenceData getReferenceData() {
-        return this.referenceData;
-    }
-
-    public RemoteBackOffice getRemoteBO() {
-        return this.remoteBO;
-    }
-
-    public RemoteMarketData getRemoteMarketData() {
-        return this.remoteMarketData;
-    }
-
-    public RemoteTrade getRemoteTrade() {
-        return this.remoteTrade;
     }
 
     /**
@@ -118,23 +89,124 @@ public class CalypsoTester {
         mockDsConnection();
     }
 
-    public void setCacheImpl(final BOCacheDummyImpl cacheImpl) {
-        this.boCacheImpl = cacheImpl;
+    /**
+     * @return the referenceData
+     */
+    public RemoteReferenceData getReferenceData() {
+        return this.referenceData;
     }
 
-    public void setDsConnection(final DSConnection dsConn) {
-        this.dsConnection = dsConn;
-    }
-
+    /**
+     * @param referenceData
+     *            the referenceData to set
+     */
     public void setReferenceData(final RemoteReferenceData referenceData) {
         this.referenceData = referenceData;
     }
 
+    /**
+     * @return the remoteBO
+     */
+    public RemoteBackOffice getRemoteBO() {
+        return this.remoteBO;
+    }
+
+    /**
+     * @param remoteBO
+     *            the remoteBO to set
+     */
     public void setRemoteBO(final RemoteBackOffice remoteBO) {
         this.remoteBO = remoteBO;
     }
 
+    /**
+     * @return the remoteTrade
+     */
+    public RemoteTrade getRemoteTrade() {
+        return this.remoteTrade;
+    }
+
+    /**
+     * @param remoteTrade
+     *            the remoteTrade to set
+     */
     public void setRemoteTrade(final RemoteTrade remoteTrade) {
         this.remoteTrade = remoteTrade;
     }
+
+    /**
+     * @return the remoteMarketData
+     */
+    public RemoteMarketData getRemoteMarketData() {
+        return this.remoteMarketData;
+    }
+
+    /**
+     * @param remoteMarketData
+     *            the remoteMarketData to set
+     */
+    public void setRemoteMarketData(final RemoteMarketData remoteMarketData) {
+        this.remoteMarketData = remoteMarketData;
+    }
+
+    /**
+     * @return the remoteAccess
+     */
+    public RemoteAccess getRemoteAccess() {
+        return this.remoteAccess;
+    }
+
+    /**
+     * @param remoteAccess
+     *            the remoteAccess to set
+     */
+    public void setRemoteAccess(final RemoteAccess remoteAccess) {
+        this.remoteAccess = remoteAccess;
+    }
+
+    /**
+     * @return the boCacheImpl
+     */
+    public BOCacheDummyImpl getBoCacheImpl() {
+        return this.boCacheImpl;
+    }
+
+    /**
+     * @param boCacheImpl
+     *            the boCacheImpl to set
+     */
+    public void setBoCacheImpl(final BOCacheDummyImpl boCacheImpl) {
+        this.boCacheImpl = boCacheImpl;
+    }
+
+    /**
+     * @return the localCacheImpl
+     */
+    public LocalCacheDummyImpl getLocalCacheImpl() {
+        return this.localCacheImpl;
+    }
+
+    /**
+     * @param localCacheImpl
+     *            the localCacheImpl to set
+     */
+    public void setLocalCacheImpl(final LocalCacheDummyImpl localCacheImpl) {
+        this.localCacheImpl = localCacheImpl;
+    }
+
+    /**
+     * @return the dsConnection
+     */
+    public DSConnection getDsConnection() {
+        return this.dsConnection;
+    }
+
+    /**
+     * @param dsConnection
+     *            the dsConnection to set
+     */
+    public void setDsConnection(final DSConnection dsConnection) {
+        this.dsConnection = dsConnection;
+    }
+
 }

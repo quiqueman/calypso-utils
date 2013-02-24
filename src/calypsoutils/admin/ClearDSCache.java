@@ -26,11 +26,18 @@ public class ClearDSCache {
             + " -user <user> -password <password> [-noaudit] [-nogui]";
 
     /**
+     * Main method.
+     * 
      * @param args
+     *            command line arguments
      * @throws ConnectException
+     *             if the apps can not connect with the DS
      * @throws PSException
+     *             if the apps can not connect with the Event Server
      * @throws RemoteException
+     *             if an exception occurs in the DS or the ES
      * @throws SerializationException
+     *             if an object can not be serialized
      */
     public static void main(final String[] args) throws ConnectException,
             PSException, RemoteException, SerializationException {
@@ -46,15 +53,27 @@ public class ClearDSCache {
         }
     }
 
+    /**
+     * Calypso environment
+     */
     protected String env;
 
+    /**
+     * calypso user
+     */
     protected String user;
 
+    /**
+     * password
+     */
     protected String passwd;
 
+    /**
+     * Data server connection
+     */
     protected DSConnection ds;
 
-    private boolean noAudit = true;
+    boolean noAudit = true;
 
     private Vector<String> logLevels;
 

@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -13,8 +16,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import calypsoutils.testing.junit.CalypsoTester;
+
 import com.calypso.tk.core.SerializationException;
 import com.calypso.tk.event.PSException;
+import com.calypso.tk.service.RemoteAccess;
 import com.calypso.tk.util.ConnectException;
 
 /**
@@ -26,6 +32,7 @@ public class ClearDSCacheTest {
      * Resource under test (rut).
      */
     private final ClearDSCache rut;
+    private final CalypsoTester calypsoTester;
 
     private PrintStream oldSystemOut;
     private PrintStream oldSystemErr;
@@ -39,6 +46,7 @@ public class ClearDSCacheTest {
      */
     public ClearDSCacheTest() {
         this.rut = new ClearDSCache();
+        this.calypsoTester = new CalypsoTester();
     }
 
     /**
@@ -67,6 +75,8 @@ public class ClearDSCacheTest {
         // Tell Java to use default out and err
         System.setErr(this.oldSystemErr);
         System.setOut(this.oldSystemOut);
+        // clean calypsoTester
+        this.calypsoTester.free();
     }
 
     /**
@@ -119,5 +129,30 @@ public class ClearDSCacheTest {
         this.systemErr.flush();
         assertEquals("Bad arguments: " + ClearDSCache.USAGE_TEXT + "\n",
                 this.baosErr.toString());
+    }
+
+    /**
+     * When -noaudit parameter is not present, the method does nothing.
+     * 
+     * @throws RemoteException
+     *             should not happen
+     */
+    @Test
+    public void testChangeLogLevelAudit() throws RemoteException {
+        final ClearDSCache rut = new ClearDSCache();
+        rut.noAudit = false;
+        rut.changeLogLevel(true);
+        final RemoteAccess remote = this.calypsoTester.getRemoteAccess();
+        rut.changeLogLevel(true);
+
+        verify(remote, never()).changeLogFilterSettings(anyString(),
+                anyString());
+        verify(remote, never()).getLogFilterSettings();
+
+        rut.changeLogLevel(true);
+
+        verify(remote, never()).changeLogFilterSettings(anyString(),
+                anyString());
+        verify(remote, never()).getLogFilterSettings();
     }
 }
