@@ -90,6 +90,8 @@ public class CalypsoTester {
     }
 
     /**
+     * get the referenceData.
+     * 
      * @return the referenceData
      */
     public RemoteReferenceData getReferenceData() {
@@ -97,6 +99,8 @@ public class CalypsoTester {
     }
 
     /**
+     * the referenceData.
+     * 
      * @param referenceData
      *            the referenceData to set
      */
