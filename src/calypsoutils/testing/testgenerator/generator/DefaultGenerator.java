@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import calypsoutils.testing.testgenerator.GeneratorFactory;
 import calypsoutils.testing.testgenerator.writer.ObjectWritterInterface;
 import calypsoutils.testing.testgenerator.writer.WrittersFactory;
 
@@ -17,6 +18,43 @@ import com.calypso.tk.core.Log;
  * 
  */
 public class DefaultGenerator implements GeneratorInterface {
+
+    public String getJavaMethodSignature(final Object object,
+            final String objectName) {
+        final String clazz = object.getClass().getSimpleName();
+
+        final StringBuilder sb = new StringBuilder("/* creation method for ");
+        sb.append(objectName);
+        sb.append(" */\n");
+        sb.append("public ");
+        sb.append(clazz);
+        sb.append(" create");
+        sb.append(capitalizeFirstChar(objectName));
+        sb.append("() {\n");
+        sb.append("\t");
+        sb.append(clazz);
+        sb.append(" ");
+        sb.append(objectName);
+        sb.append(" = new ");
+        sb.append(clazz);
+        sb.append("();\n");
+
+        return sb.toString();
+    }
+
+    public String getJavaMethodReturn(final String objectName) {
+        final StringBuilder sb = new StringBuilder("\treturn ");
+        sb.append(objectName);
+        sb.append(";\n}\n\n");
+
+        return sb.toString();
+    }
+
+    public String capitalizeFirstChar(final String string) {
+        final char[] chars = string.toCharArray();
+        chars[0] = Character.toUpperCase(chars[0]);
+        return String.valueOf(chars);
+    }
 
     /*
      * (non-Javadoc)
@@ -30,6 +68,8 @@ public class DefaultGenerator implements GeneratorInterface {
         final Class<? extends Object> clazz = object.getClass();
         final Method[] methods = clazz.getMethods();
         final StringBuilder sb = new StringBuilder();
+
+        sb.append(getJavaMethodSignature(object, objectName));
 
         for (final Method getMethod : methods) {
             // only checks public methods
@@ -57,7 +97,10 @@ public class DefaultGenerator implements GeneratorInterface {
                                             result);
                                 } else {
                                     // the result is not a 'primitive' type
-                                    // TODO: Call the generator
+                                    // Call the generator
+                                    final GeneratorInterface generator = GeneratorFactory
+                                            .getGenerator(object);
+                                    generator.getJavaCode(object, objectName);
                                 }
                             }
                         } catch (final SecurityException exception) {
@@ -83,6 +126,7 @@ public class DefaultGenerator implements GeneratorInterface {
                 }
             }
         }
+        sb.append(getJavaMethodReturn(objectName));
         return sb.toString();
     }
 }
