@@ -27,8 +27,8 @@ public class CalypsoTesterTest {
     public void testFree() {
         this.tester = new CalypsoTester();
 
-        // during the contruction of the tester the implementations are assigned
-        // to the dummy instances
+        // during the construction of the tester the implementations are
+        // assigned to the dummy instances
         assertNotNull(BOCacheExposed.getImplementation());
         try {
             LocalCache.getCcyDecimals("EUR", 2);

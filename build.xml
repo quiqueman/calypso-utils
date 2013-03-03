@@ -179,13 +179,15 @@
 		<delete dir="${output.dir}" />
 	</target>
 
-	<target name="cobertura-prepare">
+	<target name="compile">
 		<javac encoding="8859_1" optimize="yes" debug="true" debuglevel="${debuglevel}" destdir="${bin}" failonerror="TRUE" source="${source}" target="${target}">
 			<src path="${src.dir}" />
 			<classpath refid="CalypsoCustom.classpath" />
 			<compilerarg value="-Xlint" />
 		</javac>
+	</target>
 
+	<target name="cobertura-prepare" depends="compile">
 		<cobertura-instrument todir="${instrument}">
 			<fileset dir="${bin}">
 				<include name="**/*.class" />
@@ -263,6 +265,10 @@
 	<target name="javadoc" depends="set-classpath">
 		<javadoc access="public" author="true" classpathref="CalypsoCustom.classpath" destdir="${javadoc.output}" doctitle="Calypso Utils" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="calypsoutils.*" source="1.6" sourcepath="src" splitindex="true" use="true" version="true" />
 	</target>
-	
-	<target name="hudson" depends="clean, create-dirs, set-classpath, find-duplicated-code, cobertura-all, checkstyle, javadoc"/>   
+
+	<target name="hudson" depends="clean, create-dirs, set-classpath, find-duplicated-code, cobertura-all, checkstyle, javadoc" />
+
+	<target name="jar-testgenerator" depends="clean, create-dirs, set-classpath, compile">
+		<jar destfile="${output.dir}/lib/testgenerator.jar" basedir="${bin}" includes="calypsoutils/testing/testgenerator/**" />
+	</target>
 </project>

@@ -19,7 +19,7 @@
 <mapEntry key="findbugs.dir" value="/opt/findbugs-2.0.2"/>
 <mapEntry key="pmd.dir" value="/opt/pmd-bin-5.0.2"/>
 </mapAttribute>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_ANT_TARGETS" value="findbugs,"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_ANT_TARGETS" value="jar-testgenerator,"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${workspace_loc:/calypso-utils/build.xml}"/>
 <stringAttribute key="process_factory_id" value="org.eclipse.ant.ui.remoteAntProcessFactory"/>
 </launchConfiguration>
