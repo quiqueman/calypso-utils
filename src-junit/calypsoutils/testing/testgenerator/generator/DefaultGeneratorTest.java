@@ -24,7 +24,7 @@ public class DefaultGeneratorTest {
         final String javaCode = generator.getJavaMethodSignature(this,
                 "defaultGeneratorTest");
         assertEquals(
-                "/* creation method for defaultGeneratorTest */\npublic DefaultGeneratorTest createDefaultGeneratorTest() {\n\tDefaultGeneratorTest defaultGeneratorTest = new DefaultGeneratorTest();\n",
+                "\t/* creation method for defaultGeneratorTest */\n\tpublic DefaultGeneratorTest createDefaultGeneratorTest() {\n\t\tDefaultGeneratorTest defaultGeneratorTest = new DefaultGeneratorTest();\n",
                 javaCode);
     }
 
@@ -38,6 +38,6 @@ public class DefaultGeneratorTest {
         final DefaultGenerator generator = new DefaultGenerator();
         final String javaCode = generator
                 .getJavaMethodReturn("defaultGeneratorTest");
-        assertEquals("\treturn defaultGeneratorTest;\n}\n\n", javaCode);
+        assertEquals("\t\treturn defaultGeneratorTest;\n\t}\n\n", javaCode);
     }
 }

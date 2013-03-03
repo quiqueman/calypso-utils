@@ -7,8 +7,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import calypsoutils.testing.testgenerator.generator.GeneratorInterface;
 
@@ -19,15 +21,14 @@ import com.calypso.tk.core.Log;
  * 
  */
 public class TestObjectsGenerator {
-    private List<String> methods;
-
     public void saveJavaCode(final Object object, final String directoryPath,
             final String identifier, final String comment) {
-        this.methods = new LinkedList<String>();
+        final List<String> javaMethods = new LinkedList<String>();
+        final Set<String> imports = new HashSet<String>();
         final File directory = prepareDirectory(directoryPath);
         if (directory != null) {
-            getJavaCode(this.methods, object, identifier);
-            save(this.methods, directory, identifier);
+            getJavaCode(javaMethods, imports, object, identifier);
+            save(javaMethods, directory, identifier);
         }
     }
 
@@ -37,24 +38,30 @@ public class TestObjectsGenerator {
      * @param identifier
      * @return
      */
-    void getJavaCode(final List<String> javaCode, final Object object,
-            final String identifier) {
-        javaCode.add(getClassImports());
+    void getJavaCode(final List<String> javaCode, final Set<String> imports,
+            final Object object, final String identifier) {
         javaCode.add(getClassHeader(identifier));
         final GeneratorInterface generator = GeneratorFactory
                 .getGenerator(object);
-        generator.getJavaCode(javaCode, object, identifier);
+        generator.getJavaCode(javaCode, imports, object, identifier);
+        javaCode.add(0, getClassImports(imports));
         javaCode.add(getClassFooter());
     }
 
     /**
      * @return
      */
-    private String getClassImports() {
-        final StringBuilder sb = new StringBuilder("// TODO:\n");
-        sb.append("// not yet Implemented\n\n");
+    private String getClassImports(final Set<String> imports) {
+        final StringBuilder sb = new StringBuilder();
+        for (final String clazz : imports) {
+            if (!clazz.startsWith("java.lang.")) {
+                sb.append("import ");
+                sb.append(clazz);
+                sb.append(";\n");
+            }
+        }
+        sb.append("\n");
         return sb.toString();
-
     }
 
     /**
@@ -129,6 +136,12 @@ public class TestObjectsGenerator {
     public static String capitalizeFirstChar(final String string) {
         final char[] chars = string.toCharArray();
         chars[0] = Character.toUpperCase(chars[0]);
+        return String.valueOf(chars);
+    }
+
+    public static String lowerizeFirstChar(final String string) {
+        final char[] chars = string.toCharArray();
+        chars[0] = Character.toLowerCase(chars[0]);
         return String.valueOf(chars);
     }
 }

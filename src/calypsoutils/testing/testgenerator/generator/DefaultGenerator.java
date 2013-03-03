@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
+import java.util.Set;
 
 import calypsoutils.testing.testgenerator.GeneratorFactory;
 import calypsoutils.testing.testgenerator.TestObjectsGenerator;
@@ -60,9 +61,11 @@ public class DefaultGenerator implements GeneratorInterface {
      * , java.lang.String )
      */
     @Override
-    public void getJavaCode(final List<String> methodsJavaCode,
-            final Object object, final String objectName) {
+    public void getJavaCode(final List<String> javaMethods,
+            final Set<String> imports, final Object object,
+            final String objectName) {
         final Class<? extends Object> clazz = object.getClass();
+        imports.add(clazz.getName());
         final Method[] methods = clazz.getMethods();
         final StringBuilder sb = new StringBuilder();
 
@@ -88,8 +91,7 @@ public class DefaultGenerator implements GeneratorInterface {
                                 final Object result = getMethod.invoke(object,
                                         (Object[]) null);
                                 if (result != null) {
-                                    System.out.println("method: " + setMethod
-                                            + ", result: " + result);
+                                    imports.add(result.getClass().getName());
 
                                     final ObjectWriterInterface writer = WritersFactory
                                             .getWriter(result.getClass());
@@ -97,7 +99,6 @@ public class DefaultGenerator implements GeneratorInterface {
                                         final String javacode = writer.write(
                                                 objectName,
                                                 setMethod.getName(), result);
-                                        System.out.println(javacode);
                                         sb.append(javacode);
                                     } else {
                                         // the result is not a 'primitive' type
@@ -105,17 +106,17 @@ public class DefaultGenerator implements GeneratorInterface {
                                         // TODO:
                                         final GeneratorInterface generator = GeneratorFactory
                                                 .getGenerator(object);
-                                        generator
-                                                .getJavaCode(methodsJavaCode,
-                                                        result,
-                                                        methodName.substring(3));
+                                        final String newObjName = TestObjectsGenerator
+                                                .lowerizeFirstChar(methodName
+                                                        .substring(3));
+                                        generator.getJavaCode(javaMethods,
+                                                imports, result, newObjName);
                                         final ObjectWriterInterface methodWriter = WritersFactory
                                                 .getWriter(setMethod.getClass());
                                         final String javacode = methodWriter
                                                 .write(objectName,
                                                         setMethod.getName(),
                                                         methodName);
-                                        System.out.println(javacode);
                                         sb.append(javacode);
                                     }
                                 }
@@ -144,6 +145,6 @@ public class DefaultGenerator implements GeneratorInterface {
             }
         }
         sb.append(getJavaMethodReturn(objectName));
-        methodsJavaCode.add(sb.toString());
+        javaMethods.add(sb.toString());
     }
 }
