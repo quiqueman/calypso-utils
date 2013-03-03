@@ -43,7 +43,7 @@ public class DefaultGeneratorCRETest {
         assertNotNull(sourceCode);
         System.out.println(sourceCode);
 
-        assertEquals(6, this.methodsJavaCode.size());
+        assertEquals(2, this.methodsJavaCode.size());
         for (final String method : this.methodsJavaCode) {
             System.out.println(method);
         }

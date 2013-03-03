@@ -9,7 +9,7 @@ import calypsoutils.testing.testgenerator.generator.DefaultGenerator;
  * @author quique
  * 
  */
-public class MethodWritter implements ObjectWritterInterface {
+public class MethodWriter implements ObjectWriterInterface {
     @Override
     public String write(final String objName, final String methodName,
             final Object value) {

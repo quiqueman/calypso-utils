@@ -9,8 +9,8 @@ import java.lang.reflect.Modifier;
 import java.util.List;
 
 import calypsoutils.testing.testgenerator.GeneratorFactory;
-import calypsoutils.testing.testgenerator.writer.ObjectWritterInterface;
-import calypsoutils.testing.testgenerator.writer.WrittersFactory;
+import calypsoutils.testing.testgenerator.writer.ObjectWriterInterface;
+import calypsoutils.testing.testgenerator.writer.WritersFactory;
 
 import com.calypso.tk.core.Log;
 
@@ -96,10 +96,10 @@ public class DefaultGenerator implements GeneratorInterface {
                                     System.out.println("method: " + setMethod
                                             + ", result: " + result);
 
-                                    final ObjectWritterInterface writter = WrittersFactory
-                                            .getWritter(result.getClass());
-                                    if (writter != null) {
-                                        final String javacode = writter.write(
+                                    final ObjectWriterInterface writer = WritersFactory
+                                            .getWriter(result.getClass());
+                                    if (writer != null) {
+                                        final String javacode = writer.write(
                                                 objectName,
                                                 setMethod.getName(), result);
                                         System.out.println(javacode);
@@ -115,10 +115,10 @@ public class DefaultGenerator implements GeneratorInterface {
                                                         result,
                                                         methodName.substring(3));
                                         methodsJavaCode.add(newMethodJavaCode);
-                                        final ObjectWritterInterface methodWritter = WrittersFactory
-                                                .getWritter(setMethod
+                                        final ObjectWriterInterface methodWriter = WritersFactory
+                                                .getWriter(setMethod
                                                         .getClass());
-                                        final String javacode = methodWritter
+                                        final String javacode = methodWriter
                                                 .write(objectName,
                                                         setMethod.getName(),
                                                         methodName);

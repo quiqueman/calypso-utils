@@ -49,13 +49,4 @@ public class CalypsoTesterTest {
         }
         assertNull(DSConnection.getDefault());
     }
-
-    /**
-     * Test method for {@link calypsoutils.testing.junit.CalypsoTester#reset()}.
-     */
-    @Test
-    public void testReset() {
-        fail("Not yet implemented");
-    }
-
 }

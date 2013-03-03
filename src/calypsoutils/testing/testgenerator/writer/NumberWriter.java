@@ -7,7 +7,7 @@ package calypsoutils.testing.testgenerator.writer;
  * @author quique
  * 
  */
-public class NumberWritter implements ObjectWritterInterface {
+public class NumberWriter implements ObjectWriterInterface {
     @Override
     public String write(final String objName, final String methodName,
             final Object result) {
