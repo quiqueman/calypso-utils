@@ -9,6 +9,7 @@ import java.lang.reflect.Modifier;
 import java.util.List;
 
 import calypsoutils.testing.testgenerator.GeneratorFactory;
+import calypsoutils.testing.testgenerator.TestObjectsGenerator;
 import calypsoutils.testing.testgenerator.writer.ObjectWriterInterface;
 import calypsoutils.testing.testgenerator.writer.WritersFactory;
 
@@ -24,15 +25,15 @@ public class DefaultGenerator implements GeneratorInterface {
             final String objectName) {
         final String clazz = object.getClass().getSimpleName();
 
-        final StringBuilder sb = new StringBuilder("/* creation method for ");
+        final StringBuilder sb = new StringBuilder("\t/* creation method for ");
         sb.append(objectName);
         sb.append(" */\n");
-        sb.append("public ");
+        sb.append("\tpublic ");
         sb.append(clazz);
         sb.append(" create");
-        sb.append(capitalizeFirstChar(objectName));
+        sb.append(TestObjectsGenerator.capitalizeFirstChar(objectName));
         sb.append("() {\n");
-        sb.append("\t");
+        sb.append("\t\t");
         sb.append(clazz);
         sb.append(" ");
         sb.append(objectName);
@@ -44,17 +45,11 @@ public class DefaultGenerator implements GeneratorInterface {
     }
 
     public String getJavaMethodReturn(final String objectName) {
-        final StringBuilder sb = new StringBuilder("\treturn ");
+        final StringBuilder sb = new StringBuilder("\t\treturn ");
         sb.append(objectName);
-        sb.append(";\n}\n\n");
+        sb.append(";\n\t}\n\n");
 
         return sb.toString();
-    }
-
-    public static String capitalizeFirstChar(final String string) {
-        final char[] chars = string.toCharArray();
-        chars[0] = Character.toUpperCase(chars[0]);
-        return String.valueOf(chars);
     }
 
     /*

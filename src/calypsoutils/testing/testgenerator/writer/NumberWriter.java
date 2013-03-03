@@ -12,7 +12,7 @@ public class NumberWriter implements ObjectWriterInterface {
     public String write(final String objName, final String methodName,
             final Object result) {
         final StringBuilder sb = new StringBuilder();
-        sb.append("\t");
+        sb.append("\t\t");
         sb.append(objName);
         sb.append('.');
         sb.append(methodName);
