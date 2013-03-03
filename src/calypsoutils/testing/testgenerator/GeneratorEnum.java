@@ -3,26 +3,29 @@
  */
 package calypsoutils.testing.testgenerator;
 
+import calypsoutils.testing.testgenerator.generator.DefaultGenerator;
+import calypsoutils.testing.testgenerator.generator.GeneratorInterface;
+
 /**
  * @author quique
  * 
  */
 public enum GeneratorEnum {
-    TODO(new TodoGenerator());
+    DEFAULT(new DefaultGenerator());
 
-    private Generator generator;
+    private GeneratorInterface generator;
 
     /**
      * @return the generator
      */
-    public Generator getGenerator() {
+    public GeneratorInterface getGenerator() {
         return this.generator;
     }
 
     /**
      * @param generator
      */
-    private GeneratorEnum(final Generator generator) {
+    private GeneratorEnum(final GeneratorInterface generator) {
         this.generator = generator;
     }
 
