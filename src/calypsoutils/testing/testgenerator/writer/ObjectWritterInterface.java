@@ -9,5 +9,5 @@ package calypsoutils.testing.testgenerator.writer;
  */
 public interface ObjectWritterInterface {
     public String write(final String objName, final String methodName,
-            final Object result);
+            final Object value);
 }

@@ -6,6 +6,7 @@ package calypsoutils.testing.testgenerator.generator;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.List;
 
 import calypsoutils.testing.testgenerator.GeneratorFactory;
 import calypsoutils.testing.testgenerator.writer.ObjectWritterInterface;
@@ -50,7 +51,7 @@ public class DefaultGenerator implements GeneratorInterface {
         return sb.toString();
     }
 
-    public String capitalizeFirstChar(final String string) {
+    public static String capitalizeFirstChar(final String string) {
         final char[] chars = string.toCharArray();
         chars[0] = Character.toUpperCase(chars[0]);
         return String.valueOf(chars);
@@ -64,7 +65,8 @@ public class DefaultGenerator implements GeneratorInterface {
      * , java.lang.String )
      */
     @Override
-    public String getJavaCode(final Object object, final String objectName) {
+    public String getJavaCode(final List<String> methodsJavaCode,
+            final Object object, final String objectName) {
         final Class<? extends Object> clazz = object.getClass();
         final Method[] methods = clazz.getMethods();
         final StringBuilder sb = new StringBuilder();
@@ -91,16 +93,38 @@ public class DefaultGenerator implements GeneratorInterface {
                                 final Object result = getMethod.invoke(object,
                                         (Object[]) null);
                                 if (result != null) {
+                                    System.out.println("method: " + setMethod
+                                            + ", result: " + result);
+
                                     final ObjectWritterInterface writter = WrittersFactory
                                             .getWritter(result.getClass());
-                                    writter.write(objectName, methodName,
-                                            result);
-                                } else {
-                                    // the result is not a 'primitive' type
-                                    // Call the generator
-                                    final GeneratorInterface generator = GeneratorFactory
-                                            .getGenerator(object);
-                                    generator.getJavaCode(object, objectName);
+                                    if (writter != null) {
+                                        final String javacode = writter.write(
+                                                objectName,
+                                                setMethod.getName(), result);
+                                        System.out.println(javacode);
+                                        sb.append(javacode);
+                                    } else {
+                                        // the result is not a 'primitive' type
+                                        // Call the generator
+                                        // TODO:
+                                        final GeneratorInterface generator = GeneratorFactory
+                                                .getGenerator(object);
+                                        final String newMethodJavaCode = generator
+                                                .getJavaCode(methodsJavaCode,
+                                                        result,
+                                                        methodName.substring(3));
+                                        methodsJavaCode.add(newMethodJavaCode);
+                                        final ObjectWritterInterface methodWritter = WrittersFactory
+                                                .getWritter(setMethod
+                                                        .getClass());
+                                        final String javacode = methodWritter
+                                                .write(objectName,
+                                                        setMethod.getName(),
+                                                        methodName);
+                                        System.out.println(javacode);
+                                        sb.append(javacode);
+                                    }
                                 }
                             }
                         } catch (final SecurityException exception) {

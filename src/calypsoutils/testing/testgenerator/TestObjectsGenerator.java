@@ -15,25 +15,26 @@ public class TestObjectsGenerator {
     private List<String> methods;
 
     public void saveJavaCode(final Object object, final String directory,
-            final String identifier) {
+            final String identifier, final String comment) {
         if (prepareDirectory(directory)) {
             if (createClassFile(object, identifier)) {
-                final String javaCode = getJavaCode(object, identifier);
-                save(javaCode, directory, identifier);
+                getJavaCode(this.methods, object, identifier);
+                save(this.methods, directory, identifier);
             }
         }
     }
 
     /**
      * @param object
+     * @param object
      * @param identifier
      * @return
      */
-    String getJavaCode(final Object object, final String identifier) {
-        final GeneratorFactory factory = new GeneratorFactory();
-        final GeneratorInterface generator = factory.getGenerator(object);
-        // return generator.getJavaCode(object);
-        return null;
+    void getJavaCode(final List<String> methodsJavaCode, final Object object,
+            final String identifier) {
+        final GeneratorInterface generator = GeneratorFactory
+                .getGenerator(object);
+        generator.getJavaCode(methodsJavaCode, object, identifier);
     }
 
     /**
@@ -41,7 +42,7 @@ public class TestObjectsGenerator {
      * @param directory
      * @param identifier
      */
-    private void save(final String javaCode, final String directory,
+    private void save(final List<String> javaCode, final String directory,
             final String identifier) {
         throw new UnsupportedOperationException(
                 "TODO Auto-generated method stub");

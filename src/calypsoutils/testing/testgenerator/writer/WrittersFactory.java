@@ -3,6 +3,8 @@
  */
 package calypsoutils.testing.testgenerator.writer;
 
+import com.calypso.tk.core.Log;
+
 /**
  * @author quique
  * 
@@ -21,10 +23,16 @@ public class WrittersFactory {
                 || "long".equalsIgnoreCase(className)
                 || "double".equalsIgnoreCase(className)) {
             return numberWritter;
+        } else if ("Method".equals(className)) {
+            return methodWritter;
+        }
+        if (Log.isDebug()) {
+            Log.debug(WrittersFactory.class, "writter not found for " + clazz);
         }
         return null;
     }
 
     private static StringWritter stringWritter = new StringWritter();
     private static NumberWritter numberWritter = new NumberWritter();
+    private static MethodWritter methodWritter = new MethodWritter();
 }
