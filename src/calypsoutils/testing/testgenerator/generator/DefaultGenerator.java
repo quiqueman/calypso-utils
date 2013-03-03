@@ -65,7 +65,7 @@ public class DefaultGenerator implements GeneratorInterface {
      * , java.lang.String )
      */
     @Override
-    public String getJavaCode(final List<String> methodsJavaCode,
+    public void getJavaCode(final List<String> methodsJavaCode,
             final Object object, final String objectName) {
         final Class<? extends Object> clazz = object.getClass();
         final Method[] methods = clazz.getMethods();
@@ -110,14 +110,12 @@ public class DefaultGenerator implements GeneratorInterface {
                                         // TODO:
                                         final GeneratorInterface generator = GeneratorFactory
                                                 .getGenerator(object);
-                                        final String newMethodJavaCode = generator
+                                        generator
                                                 .getJavaCode(methodsJavaCode,
                                                         result,
                                                         methodName.substring(3));
-                                        methodsJavaCode.add(newMethodJavaCode);
                                         final ObjectWriterInterface methodWriter = WritersFactory
-                                                .getWriter(setMethod
-                                                        .getClass());
+                                                .getWriter(setMethod.getClass());
                                         final String javacode = methodWriter
                                                 .write(objectName,
                                                         setMethod.getName(),
@@ -151,6 +149,6 @@ public class DefaultGenerator implements GeneratorInterface {
             }
         }
         sb.append(getJavaMethodReturn(objectName));
-        return sb.toString();
+        methodsJavaCode.add(sb.toString());
     }
 }

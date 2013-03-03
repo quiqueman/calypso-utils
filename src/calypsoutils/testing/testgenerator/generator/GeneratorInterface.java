@@ -10,6 +10,6 @@ import java.util.List;
  * 
  */
 public interface GeneratorInterface {
-    public String getJavaCode(List<String> methods, Object object,
+    public void getJavaCode(List<String> methods, Object object,
             String objectName);
 }

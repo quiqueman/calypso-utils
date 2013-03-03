@@ -3,6 +3,7 @@
  */
 package calypsoutils.testing.testgenerator;
 
+import java.io.File;
 import java.util.List;
 
 import calypsoutils.testing.testgenerator.generator.GeneratorInterface;
@@ -59,11 +60,18 @@ public class TestObjectsGenerator {
     }
 
     /**
-     * @param directory
-     * @return
+     * Create the directory if it doesn't exist.
+     * 
+     * @param directoryName
+     *            directory path
+     * @return true if everything is ok, false in case of error
      */
-    boolean prepareDirectory(final String directory) {
-        throw new UnsupportedOperationException(
-                "TODO Auto-generated method stub");
+    boolean prepareDirectory(final String directoryName) {
+        final File directory = new File(directoryName);
+        if (!directory.exists()) {
+            // create directory
+            return directory.mkdir();
+        }
+        return directory.canWrite();
     }
 }
