@@ -6,13 +6,13 @@ package calypsoutils.testing.testgenerator.writer;
 import calypsoutils.testing.testgenerator.CreateTestObject;
 
 /**
- * @author quique
+ * A writer which can write the call to another method
  * 
  */
-public class MethodWriter implements ObjectWriterInterface {
+public class MethodWriter implements ObjectWriterInterface<String> {
     @Override
     public String write(final String objName, final String methodName,
-            final Object value) {
+            final String value) {
         final StringBuilder sb = new StringBuilder();
         sb.append("\t\t");
         sb.append(objName);

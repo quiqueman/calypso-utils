@@ -4,13 +4,13 @@
 package calypsoutils.testing.testgenerator.writer;
 
 /**
- * @author quique
+ * Writer for Strings
  * 
  */
-public class StringWriter implements ObjectWriterInterface {
+public class StringWriter implements ObjectWriterInterface<String> {
     @Override
     public String write(final String objName, final String methodName,
-            final Object result) {
+            final String result) {
         final StringBuilder sb = new StringBuilder();
         sb.append("\t\t");
         sb.append(objName);
