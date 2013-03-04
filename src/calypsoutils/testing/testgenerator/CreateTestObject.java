@@ -20,7 +20,7 @@ import com.calypso.tk.core.Log;
  * @author quique
  * 
  */
-public class TestObjectsGenerator {
+public class CreateTestObject {
     public void saveJavaCode(final Object object, final String directoryPath,
             final String identifier, final String comment) {
         final List<String> javaMethods = new LinkedList<String>();

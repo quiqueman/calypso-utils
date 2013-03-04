@@ -25,13 +25,13 @@ import com.calypso.tk.bo.BOCre;
  * Test class for TestObjectsGenerator
  * 
  */
-public class TestObjectsGeneratorTest {
+public class CreateTestObjectTest {
     final static String DIRECTORY_NAME = "/tmp/calypsoutils";
-    TestObjectsGenerator rut;
+    CreateTestObject rut;
     File directory;
 
-    public TestObjectsGeneratorTest() {
-        this.rut = new TestObjectsGenerator();
+    public CreateTestObjectTest() {
+        this.rut = new CreateTestObject();
     }
 
     @Before
@@ -47,7 +47,7 @@ public class TestObjectsGeneratorTest {
 
     /**
      * Test method for
-     * {@link calypsoutils.testing.testgenerator.TestObjectsGenerator#prepareDirectory(java.lang.String)}
+     * {@link calypsoutils.testing.testgenerator.CreateTestObject#prepareDirectory(java.lang.String)}
      * .
      */
     @Test
@@ -63,7 +63,7 @@ public class TestObjectsGeneratorTest {
 
     /**
      * Test method for
-     * {@link calypsoutils.testing.testgenerator.TestObjectsGenerator#prepareDirectory(java.lang.String)}
+     * {@link calypsoutils.testing.testgenerator.CreateTestObject#prepareDirectory(java.lang.String)}
      * .
      */
     @Test
@@ -83,7 +83,7 @@ public class TestObjectsGeneratorTest {
 
     /**
      * Test method for
-     * {@link calypsoutils.testing.testgenerator.TestObjectsGenerator#prepareDirectory(java.lang.String)}
+     * {@link calypsoutils.testing.testgenerator.CreateTestObject#prepareDirectory(java.lang.String)}
      * .
      */
     @Test
@@ -99,7 +99,7 @@ public class TestObjectsGeneratorTest {
 
     /**
      * Test method for
-     * {@link calypsoutils.testing.testgenerator.TestObjectsGenerator#saveJavaCode(Object, String, String , String )}
+     * {@link calypsoutils.testing.testgenerator.CreateTestObject#saveJavaCode(Object, String, String , String )}
      * 
      * @throws IOException
      * 

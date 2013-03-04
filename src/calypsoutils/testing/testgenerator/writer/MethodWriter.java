@@ -3,7 +3,7 @@
  */
 package calypsoutils.testing.testgenerator.writer;
 
-import calypsoutils.testing.testgenerator.TestObjectsGenerator;
+import calypsoutils.testing.testgenerator.CreateTestObject;
 
 /**
  * @author quique
@@ -32,6 +32,6 @@ public class MethodWriter implements ObjectWriterInterface {
      */
     private String getNewMethodName(final String value) {
         return "create"
-                + TestObjectsGenerator.capitalizeFirstChar(value.substring(3));
+                + CreateTestObject.capitalizeFirstChar(value.substring(3));
     }
 }

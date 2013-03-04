@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import calypsoutils.testing.testgenerator.GeneratorFactory;
-import calypsoutils.testing.testgenerator.TestObjectsGenerator;
+import calypsoutils.testing.testgenerator.CreateTestObject;
 import calypsoutils.testing.testgenerator.writer.ObjectWriterInterface;
 import calypsoutils.testing.testgenerator.writer.WritersFactory;
 
@@ -32,7 +32,7 @@ public class DefaultGenerator implements GeneratorInterface {
         sb.append("\tpublic ");
         sb.append(clazz);
         sb.append(" create");
-        sb.append(TestObjectsGenerator.capitalizeFirstChar(objectName));
+        sb.append(CreateTestObject.capitalizeFirstChar(objectName));
         sb.append("() {\n");
         sb.append("\t\t");
         sb.append(clazz);
@@ -106,7 +106,7 @@ public class DefaultGenerator implements GeneratorInterface {
                                         // TODO:
                                         final GeneratorInterface generator = GeneratorFactory
                                                 .getGenerator(object);
-                                        final String newObjName = TestObjectsGenerator
+                                        final String newObjName = CreateTestObject
                                                 .lowerizeFirstChar(methodName
                                                         .substring(3));
                                         generator.getJavaCode(javaMethods,
