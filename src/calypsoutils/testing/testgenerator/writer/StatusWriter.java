@@ -3,24 +3,24 @@
  */
 package calypsoutils.testing.testgenerator.writer;
 
-import com.calypso.tk.core.JDate;
+import com.calypso.tk.core.Status;
 
 /**
- * @author quique
+ * Writer for Calypso Status objects
  * 
  */
-public class JDateWriter implements ObjectWriterInterface<JDate> {
+public class StatusWriter implements ObjectWriterInterface<Status> {
     @Override
     public String write(final String objName, final String methodName,
-            final JDate value) {
+            final Status value) {
         final StringBuilder sb = new StringBuilder();
-        sb.append("\t\t");
+        sb.append("\t");
         sb.append(objName);
         sb.append('.');
         sb.append(methodName);
-        sb.append("(JDate.valueOf(");
-        sb.append(value.getJulian());
-        sb.append("));\n");
+        sb.append("(Status.valueOf(\"");
+        sb.append(value);
+        sb.append("\"));\n");
 
         return sb.toString();
     }

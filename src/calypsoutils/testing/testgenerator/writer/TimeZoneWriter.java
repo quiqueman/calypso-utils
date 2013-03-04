@@ -3,24 +3,24 @@
  */
 package calypsoutils.testing.testgenerator.writer;
 
-import com.calypso.tk.core.JDate;
+import java.util.TimeZone;
 
 /**
- * @author quique
+ * Writer for java TimeZone objects
  * 
  */
-public class JDateWriter implements ObjectWriterInterface<JDate> {
+public class TimeZoneWriter implements ObjectWriterInterface<TimeZone> {
     @Override
     public String write(final String objName, final String methodName,
-            final JDate value) {
+            final TimeZone value) {
         final StringBuilder sb = new StringBuilder();
-        sb.append("\t\t");
+        sb.append("\t");
         sb.append(objName);
         sb.append('.');
         sb.append(methodName);
-        sb.append("(JDate.valueOf(");
-        sb.append(value.getJulian());
-        sb.append("));\n");
+        sb.append("(TimeZone.getTimeZone(\"");
+        sb.append(value.getID());
+        sb.append("\"));\n");
 
         return sb.toString();
     }

@@ -3,24 +3,24 @@
  */
 package calypsoutils.testing.testgenerator.writer;
 
-import com.calypso.tk.core.JDate;
+import com.calypso.tk.core.Action;
 
 /**
- * @author quique
+ * Writer for Calypso Action objects
  * 
  */
-public class JDateWriter implements ObjectWriterInterface<JDate> {
+public class ActionWriter implements ObjectWriterInterface<Action> {
     @Override
     public String write(final String objName, final String methodName,
-            final JDate value) {
+            final Action value) {
         final StringBuilder sb = new StringBuilder();
-        sb.append("\t\t");
+        sb.append("\t");
         sb.append(objName);
         sb.append('.');
         sb.append(methodName);
-        sb.append("(JDate.valueOf(");
-        sb.append(value.getJulian());
-        sb.append("));\n");
+        sb.append("(Action.valueOf(\"");
+        sb.append(value);
+        sb.append("\"));\n");
 
         return sb.toString();
     }
