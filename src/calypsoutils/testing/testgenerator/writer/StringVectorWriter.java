@@ -27,6 +27,7 @@ public class StringVectorWriter implements
         sb.append('.');
         sb.append(methodName);
         sb.append("(Vector);\n\n");
+        sb.append("(vector);\n\n");
 
         return sb.toString();
     }

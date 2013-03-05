@@ -29,7 +29,7 @@ public class WritersFactory {
      * 
      */
     private static void init() {
-        final StringWriter stringWriter = new StringWriter();
+        final StringVectorWriter stringWriter = new StringVectorWriter();
         final NumberWriter numberWriter = new NumberWriter();
 
         writersMap = new HashMap<String, ObjectWriterInterface<?>>();
