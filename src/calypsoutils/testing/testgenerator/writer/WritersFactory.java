@@ -10,13 +10,13 @@ import java.util.HashMap;
  * 
  */
 public class WritersFactory {
-    public static HashMap<String, ObjectWriterInterface> writersMap;
+    public static HashMap<String, ObjectWriterInterface<?>> writersMap;
 
     /**
      * @param clazz
      * @return
      */
-    public static ObjectWriterInterface getWriter(final Class<?> clazz) {
+    public static ObjectWriterInterface<?> getWriter(final Class<?> clazz) {
         if (writersMap == null) {
             init();
         }
@@ -29,18 +29,24 @@ public class WritersFactory {
      * 
      */
     private static void init() {
-        final StringVectorWriter stringWriter = new StringVectorWriter();
+        final StringWriter stringWriter = new StringWriter();
         final NumberWriter numberWriter = new NumberWriter();
 
-        writersMap = new HashMap<String, ObjectWriterInterface>();
+        writersMap = new HashMap<String, ObjectWriterInterface<?>>();
+        writersMap.put("action", stringWriter);
         writersMap.put("string", stringWriter);
-        writersMap.put("boolean", stringWriter);
+        writersMap.put("boolean", new BooleanWriter());
         writersMap.put("int", numberWriter);
         writersMap.put("integer", numberWriter);
         writersMap.put("long", numberWriter);
         writersMap.put("double", numberWriter);
         writersMap.put("method", new MethodWriter());
         writersMap.put("jdate", new JDateWriter());
+        writersMap.put("jdatetime", new JDatetimeWriter());
+        writersMap.put("status", new StatusWriter());
+        writersMap.put("timezone", new TimeZoneWriter());
+        writersMap.put("hashtable", new StringHashtableWriter());
+        writersMap.put("vector", new StringVectorWriter());
     }
 
 }

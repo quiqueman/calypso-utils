@@ -126,4 +126,29 @@ public class CreateTestObjectTest {
         bf.close();
         targetClass.delete();
     }
+
+    /**
+     * Test method for
+     * {@link calypsoutils.testing.testgenerator.CreateTestObject#saveJavaCode(Object, String, String , String )}
+     * 
+     * @throws IOException
+     * 
+     */
+    @Test
+    public void testSaveJavaCodeWithCompilation() throws IOException {
+        final CreSample sample = new CreSample();
+        final BOCre cre = sample.createCre();
+
+        this.rut.saveJavaCode(cre, "/tmp/calypsoutils", "creSample",
+                "Junit test for TestObjectGenerator");
+
+        final File targetClass = new File(
+                "/tmp/calypsoutils/CreSampleBuilder.java");
+        assertTrue(targetClass.exists());
+
+        final boolean result = new JavaCompilation()
+                .compile("/tmp/calypsoutils/CreSampleBuilder.java");
+        targetClass.delete();
+        assertTrue(result);
+    }
 }
