@@ -29,12 +29,11 @@ public class WritersFactory {
      * 
      */
     private static void init() {
-        final StringVectorWriter stringWriter = new StringVectorWriter();
         final NumberWriter numberWriter = new NumberWriter();
 
         writersMap = new HashMap<String, ObjectWriterInterface<?>>();
-        writersMap.put("action", stringWriter);
-        writersMap.put("string", stringWriter);
+        writersMap.put("action", new ActionWriter());
+        writersMap.put("string", new StringWriter());
         writersMap.put("boolean", new BooleanWriter());
         writersMap.put("int", numberWriter);
         writersMap.put("integer", numberWriter);

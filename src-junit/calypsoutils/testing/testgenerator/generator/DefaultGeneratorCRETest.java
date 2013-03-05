@@ -43,7 +43,7 @@ public class DefaultGeneratorCRETest {
         this.generator.getJavaCode(this.methodsJavaCode, this.imports, cre,
                 "cre");
 
-        assertTrue(this.methodsJavaCode.size() > 1);
+        assertTrue(this.methodsJavaCode.size() > 0);
         for (final String method : this.methodsJavaCode) {
             System.out.println(method);
         }

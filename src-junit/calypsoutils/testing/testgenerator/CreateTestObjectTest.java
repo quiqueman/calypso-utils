@@ -34,15 +34,26 @@ public class CreateTestObjectTest {
         this.rut = new CreateTestObject();
     }
 
+    private void deleteDirectory() {
+        if (this.directory.exists()) {
+            for (final File file : this.directory.listFiles()) {
+                file.delete();
+            }
+            this.directory.delete();
+        }
+    }
+
     @Before
     public void setup() {
         this.directory = new File(DIRECTORY_NAME);
-        this.directory.deleteOnExit();
+        if (this.directory.exists()) {
+            deleteDirectory();
+        }
     }
 
     @After
     public void tearsDown() {
-        this.directory.delete();
+        deleteDirectory();
     }
 
     /**

@@ -20,7 +20,7 @@ public class WritersFactoryTest {
      */
     @Test
     public void testGetWriterString() {
-        final ObjectWriterInterface result = WritersFactory
+        final ObjectWriterInterface<?> result = WritersFactory
                 .getWriter(String.class);
         assertEquals("StringWriter", result.getClass().getSimpleName());
     }
@@ -32,9 +32,9 @@ public class WritersFactoryTest {
      */
     @Test
     public void testGetWriterBoolean() {
-        final ObjectWriterInterface result = WritersFactory
+        final ObjectWriterInterface<?> result = WritersFactory
                 .getWriter(Boolean.class);
-        assertEquals("StringWriter", result.getClass().getSimpleName());
+        assertEquals("BooleanWriter", result.getClass().getSimpleName());
     }
 
     /**
@@ -44,7 +44,7 @@ public class WritersFactoryTest {
      */
     @Test
     public void testGetWriterInt() {
-        final ObjectWriterInterface result = WritersFactory
+        final ObjectWriterInterface<?> result = WritersFactory
                 .getWriter(int.class);
         assertEquals("NumberWriter", result.getClass().getSimpleName());
     }
@@ -56,7 +56,7 @@ public class WritersFactoryTest {
      */
     @Test
     public void testGetWriterLong() {
-        final ObjectWriterInterface result = WritersFactory
+        final ObjectWriterInterface<?> result = WritersFactory
                 .getWriter(long.class);
         assertEquals("NumberWriter", result.getClass().getSimpleName());
     }
@@ -68,7 +68,7 @@ public class WritersFactoryTest {
      */
     @Test
     public void testGetWriterInteger() {
-        final ObjectWriterInterface result = WritersFactory
+        final ObjectWriterInterface<?> result = WritersFactory
                 .getWriter(Integer.class);
         assertEquals("NumberWriter", result.getClass().getSimpleName());
     }
@@ -80,7 +80,7 @@ public class WritersFactoryTest {
      */
     @Test
     public void testGetWriterLong2() {
-        final ObjectWriterInterface result = WritersFactory
+        final ObjectWriterInterface<?> result = WritersFactory
                 .getWriter(Long.class);
         assertEquals("NumberWriter", result.getClass().getSimpleName());
     }
